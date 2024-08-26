@@ -33,3 +33,7 @@ PRODUCT_PACKAGES += \
     update_engine \
     update_verifier \
     update_engine_sideload
+
+# Device resolution
+TARGET_SCREEN_WIDTH := 1344
+TARGET_SCREEN_HEIGHT := 2992
