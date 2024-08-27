@@ -5,6 +5,8 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+ALLOW_MISSING_DEPENDENCIES := true
+
 LOCAL_PATH := device/google/husky
 # A/B
 AB_OTA_POSTINSTALL_CONFIG += \
@@ -19,7 +21,10 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.0-service
 
 PRODUCT_PACKAGES += \
-    bootctrl.zuma
+    bootctrl.zuma \
+    libgptutils \
+    libz \
+    libcutils
 
 #PRODUCT_STATIC_BOOT_CONTROL_HAL := \
 #    bootctrl.zuma \

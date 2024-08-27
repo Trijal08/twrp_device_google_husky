@@ -15,7 +15,7 @@ $(call inherit-product, vendor/twrp/config/common.mk)
 # Inherit from generic device
 $(call inherit-product, device/google/husky/device.mk)
 
-PRODUCT_DEVICE := generic
+PRODUCT_DEVICE := husky
 PRODUCT_NAME := twrp_husky
 PRODUCT_BRAND := google
 PRODUCT_MODEL := mainline
