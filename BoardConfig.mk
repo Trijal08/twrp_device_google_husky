@@ -168,9 +168,6 @@ PLATFORM_VERSION := 16.1.0
 SELINUX_IGNORE_NEVERALLOWS := true
 
 # Load Touch modules files
-TW_LOAD_VENDOR_MODULES := "focal_touch.ko goodix_brl_touch.ko goog_touch_interface.ko"
-
-# Load Touch modules files
 TW_LOAD_VENDOR_MODULES := "sec_touch.ko goodix_brl_touch.ko goog_touch_interface.ko"
 
 # TWRP specific build flags
