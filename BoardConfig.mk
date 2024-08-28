@@ -164,6 +164,9 @@ BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
 VENDOR_SECURITY_PATCH := 2099-12-31
 PLATFORM_VERSION := 16.1.0
 
+# sepolicy
+SELINUX_IGNORE_NEVERALLOWS := true
+
 # Load Touch modules files
 TW_LOAD_VENDOR_MODULES := "focal_touch.ko goodix_brl_touch.ko goog_touch_interface.ko"
 
