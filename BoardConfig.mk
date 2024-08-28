@@ -168,31 +168,12 @@ PLATFORM_VERSION := 16.1.0
 SELINUX_IGNORE_NEVERALLOWS := true
 
 # Load Touch modules files
-TW_LOAD_VENDOR_MODULES := "sec_touch.ko goodix_brl_touch.ko goog_touch_interface.ko"
+TW_LOAD_VENDOR_MODULES := "focal_touch.ko goodix_brl_touch.ko goog_touch_interface.ko"
 
-# TWRP specific build flags
-TWRP_EVENT_LOGGING := true
-TWRP_INCLUDE_LOGCAT := true
-TARGET_USES_LOGD := true
+# TWRP Configuration
 TW_THEME := portrait_hdpi
-TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
 TW_EXTRA_LANGUAGES := true
-TW_NO_SCREEN_BLANK := true
-TW_NO_SCREEN_TIMEOUT := true
-TW_INPUT_BLACKLIST := "accelerometer"
-TW_INPUT_BLACKLIST := "gyroscope"
+TW_SCREEN_BLANK_ON_BOOT := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
-TW_MAX_BRIGHTNESS := 520
-TW_INCLUDE_FASTBOOTD := true
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.0/lun.%d/file
 TW_USE_TOOLBOX := true
 TW_INCLUDE_REPACKTOOLS := true
-TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
-TW_EXCLUDE_DEFAULT_USB_INIT := true
-TW_INCLUDE_RESETPROP := true
-TW_EXCLUDE_APEX := true
-TW_SUPPORT_INPUT_AIDL_HAPTICS := true
-TW_Y_OFFSET := 80
-TW_H_OFFSET := -80
-TW_OVERRIDE_SYSTEM_PROPS := \ 
-"ro.bootimage.build.date.utc=ro.build.date.utc;ro.build.date.utc;ro.odm.build.date.utc=ro.build.date.utc;ro.product.build.date.utc=ro.build.date.utc;ro.system.build.date.utc=ro.build.date.utc;ro.system_ext.build.date.utc=ro.build.date.utc;ro.vendor.build.date.utc=ro.build.date.utc;ro.build.product;ro.build.fingerprint=ro.system.build.fingerprint;ro.build.version.incremental;ro.product.name=ro.product.system.name"
