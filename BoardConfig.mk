@@ -166,12 +166,9 @@ PLATFORM_VERSION := 16.1.0
 
 # sepolicy
 SELINUX_IGNORE_NEVERALLOWS := true
-<<<<<<< HEAD
-=======
 
 # Load Touch modules files
 TW_LOAD_VENDOR_MODULES := "focal_touch.ko goodix_brl_touch.ko goog_touch_interface.ko"
->>>>>>> 01eff71ef5877e02caf80d238c9317f2374f10e8
 
 # Load Touch modules files
 TW_LOAD_VENDOR_MODULES := "sec_touch.ko goodix_brl_touch.ko goog_touch_interface.ko"
