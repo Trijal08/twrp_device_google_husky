@@ -29,8 +29,8 @@ $(call inherit-product-if-exists, vendor/google_devices/zuma/proprietary/device-
 $(call inherit-product-if-exists, vendor/google_devices/husky/proprietary/husky/device-vendor-husky.mk)
 $(call inherit-product-if-exists, vendor/google_devices/husky/proprietary/husky-vendor.mk)
 
-include device/google/shusky-sepolicy/husky-sepolicy.mk
-include device/google/zuma-sepolicy/zuma-sepolicy.mk
+#include device/google/shusky-sepolicy/husky-sepolicy.mk
+#include device/google/zuma-sepolicy/zuma-sepolicy.mk
 include device/google/gs-common/touch/gti/gti.mk
 
 PRODUCT_COPY_FILES += \
