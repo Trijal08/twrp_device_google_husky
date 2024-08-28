@@ -30,7 +30,6 @@ AB_OTA_PARTITIONS += \
     vbmeta \
     vendor \
     boot
-BOARD_USES_RECOVERY_AS_BOOT := true
 
 # Architecture
 TARGET_SOC := zuma
@@ -67,7 +66,7 @@ BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 BOARD_KERNEL_IMAGE_NAME := Image
-TARGET_KERNEL_CONFIG := cloudripper_gki_defconfig
+TARGET_KERNEL_CONFIG := zuma_defconfig
 TARGET_KERNEL_SOURCE := kernel/google/zuma/private/soc/gs
 
 # Kernel - prebuilt
@@ -79,6 +78,7 @@ endif
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
+BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 67108864
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
 BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_SYSTEMIMAGE_PARTITION_TYPE := ext4
@@ -87,8 +87,34 @@ BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_COPY_OUT_VENDOR := vendor
 BOARD_SUPER_PARTITION_SIZE := 9126805504 # TODO: Fix hardcoded value
 BOARD_SUPER_PARTITION_GROUPS := google_dynamic_partitions
-BOARD_GOOGLE_DYNAMIC_PARTITIONS_PARTITION_LIST := system system system_dlkm system_ext product vendor vendor_dlkm
+BOARD_GOOGLE_DYNAMIC_PARTITIONS_PARTITION_LIST := system system_ext product vendor vendor_dlkm
 BOARD_GOOGLE_DYNAMIC_PARTITIONS_SIZE := 9122611200 # TODO: Fix hardcoded value
+
+VENDOR_CMDLINE := "dyndbg=\"func alloc_contig_dump_pages +p\" \
+                earlycon=exynos4210,0x10A00000 console=ttySAC0,115200 androidboot.console=ttySAC0 printk.devkmsg=on \
+                swiotlb=noforce \
+		cma_sysfs.experimental=Y \
+		cgroup_disable=memory \
+		rcupdate.rcu_expedited=1 \
+		rcu_nocbs=all \
+		stack_depot_disable=off \
+		page_pinner=on \
+		swiotlb=1024 \
+		disable_dma32=on \
+                at24.write_timeout=100 \
+		log_buf_len=1024K \
+		bootconfig"
+
+BOARD_BOOTCONFIG += androidboot.load_modules_parallel=true
+BOARD_KERNEL_CMDLINE += exynos_drm.load_sequential=1
+
+# Kernel
+BOARD_KERNEL_BASE        := 0x1000000
+BOARD_KERNEL_PAGESIZE    := 2048
+BOARD_KERNEL_OFFSET      := 0x00008000
+BOARD_RAMDISK_OFFSET     := 0x01000000
+BOARD_KERNEL_TAGS_OFFSET := 0x00000100
+BOARD_DTB_OFFSET         := 0x01f00000
 
 # vendor_boot as recovery
 BOARD_BOOT_HEADER_VERSION := 4
@@ -100,7 +126,7 @@ BOARD_USES_GENERIC_KERNEL_IMAGE := true
 BOARD_MOVE_GSI_AVB_KEYS_TO_VENDOR_BOOT := true
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_KERNEL_IMAGE_NAME := Image.lz4
-TARGET_KERNEL_CONFIG := cloudripper_gki_defconfig
+TARGET_KERNEL_CONFIG := zuma_defconfig
 TARGET_KERNEL_SOURCE := kernel/google/zuma/private/soc/gs
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image
 BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)/prebuilt/dtbs

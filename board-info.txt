@@ -1,0 +1,2 @@
+require board=husky
+require partition-exists=vendor_kernel_boot
