@@ -171,10 +171,7 @@ VENDOR_SECURITY_PATCH := 2099-12-31
 PLATFORM_VERSION := 16.1.0
 
 # Load Touch modules files
-PRODUCT_COPY_FILES += \
-    device/google/husky/recovery/root/init.recovery.usb.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.usb.rc \
-    device/google/husky/prebuilt/touchdriver.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/touchdriver.sh
-TW_LOAD_VENDOR_MODULES := "heatmap.ko touch_offload.ko ftm5.ko sec_touch.ko goodix_brl_touch.ko goog_touch_interface.ko touchdriver.sh"
+TW_LOAD_VENDOR_MODULES := "heatmap.ko touch_offload.ko ftm5.ko sec_touch.ko goodix_brl_touch.ko goog_touch_interface.ko"
 
 # TWRP specific build flags
 TWRP_EVENT_LOGGING := true
@@ -185,9 +182,9 @@ TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
 TW_EXTRA_LANGUAGES := true
 TW_NO_SCREEN_BLANK := true
 TW_NO_SCREEN_TIMEOUT := true
-TW_INPUT_BLACKLIST := "accelerometer"
-TW_INPUT_BLACKLIST := "gyroscope"
-TW_INPUT_BLACKLIST := "hbtp_vm"
+#TW_INPUT_BLACKLIST := "accelerometer"
+#TW_INPUT_BLACKLIST := "gyroscope"
+#TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_MAX_BRIGHTNESS := 520
 TW_INCLUDE_FASTBOOTD := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.0/lun.%d/file
