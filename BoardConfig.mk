@@ -9,6 +9,9 @@ DEVICE_PATH := device/google/husky
 
 include device/google/zuma/BoardConfig-common.mk
 
+TARGET_BOARD_INFO_FILE := device/google/husky/board-info.txt
+TARGET_BOOTLOADER_BOARD_NAME := husky
+
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
 
@@ -37,6 +40,8 @@ TARGET_SOC := zuma
 TARGET_SOC_NAME := google
 
 USES_DEVICE_GOOGLE_ZUMA := true
+USES_DEVICE_GOOGLE_HUSKY := true
+USES_DEVICE_GOOGLE_SHUSKY := true
 
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-2a
