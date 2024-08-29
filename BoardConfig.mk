@@ -8,6 +8,7 @@
 DEVICE_PATH := device/google/husky
 
 include device/google/zuma/BoardConfig-common.mk
+include vendor/google_devices/husky/BoardConfigVendor.mk
 
 TARGET_BOARD_INFO_FILE := device/google/husky/board-info.txt
 TARGET_BOOTLOADER_BOARD_NAME := husky
@@ -57,7 +58,7 @@ TARGET_BOOTLOADER_BOARD_NAME := husky
 TARGET_NO_BOOTLOADER := true
 
 # Display
-TARGET_SCREEN_DENSITY := 480
+#TARGET_SCREEN_DENSITY := 480
 TARGET_USES_VULKAN := true
 
 # Kernel
@@ -169,11 +170,11 @@ BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
 VENDOR_SECURITY_PATCH := 2099-12-31
 PLATFORM_VERSION := 16.1.0
 
-# sepolicy
-SELINUX_IGNORE_NEVERALLOWS := true
-
 # Load Touch modules files
-TW_LOAD_VENDOR_MODULES := "sec_touch.ko goodix_brl_touch.ko goog_touch_interface.ko"
+PRODUCT_COPY_FILES += \
+    device/google/husky/recovery/root/init.recovery.usb.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.usb.rc \
+    device/google/husky/prebuilt/touchdriver.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/touchdriver.sh
+TW_LOAD_VENDOR_MODULES := "heatmap.ko touch_offload.ko ftm5.ko sec_touch.ko goodix_brl_touch.ko goog_touch_interface.ko touchdriver.sh"
 
 # TWRP specific build flags
 TWRP_EVENT_LOGGING := true
