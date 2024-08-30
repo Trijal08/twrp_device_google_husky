@@ -1,4 +1,4 @@
-# Android device tree for google mainline (generic)
+# Android device tree for Google Pixel 8 Pro (husky)
 
 ```
 #
@@ -8,4 +8,3 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 ```
-# twrp_device_google_husky
