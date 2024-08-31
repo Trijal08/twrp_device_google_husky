@@ -31,6 +31,8 @@ $(call inherit-product-if-exists, vendor/google_devices/husky/proprietary/husky-
 
 #include device/google/shusky-sepolicy/husky-sepolicy.mk
 #include device/google/zuma-sepolicy/zuma-sepolicy.mk
+include hardware/google/pixel/vibrator/cs40l26/device.mk
+include device/google/gs-common/bcmbt/bluetooth.mk
 include device/google/gs-common/touch/stm/stm20.mk
 include device/google/gs-common/touch/gti/gti.mk
 include device/google/gs-common/touch/touchinspector/touchinspector.mk
@@ -176,28 +178,25 @@ PRODUCT_PACKAGES += \
 	android.hardware.secure_element@1.2-service-gto \
 	android.hardware.secure_element@1.2-service-gto-ese2
 
-# Vibrator
-#PRODUCT_VENDOR_PROPERTIES += \
-#	ro.vendor.vibrator.hal.supported_primitives=243 \
-#	ro.vendor.vibrator.hal.f0.comp.enabled=1 \
-#	ro.vendor.vibrator.hal.redc.comp.enabled=0 \
-#	persist.vendor.vibrator.hal.context.enable=false \
-#	persist.vendor.vibrator.hal.context.scale=40 \
-#	persist.vendor.vibrator.hal.context.fade=true \
-#	persist.vendor.vibrator.hal.context.cooldowntime=1600 \
-#	persist.vendor.vibrator.hal.context.settlingtime=5000
-
 # Vibrator HAL
-#ADAPTIVE_HAPTICS_FEATURE := adaptive_haptics_v1
-#PRODUCT_VENDOR_PROPERTIES += \
-#ro.vendor.vibrator.hal.supported_primitives=243 \
-#ro.vendor.vibrator.hal.f0.comp.enabled=1 \
-#ro.vendor.vibrator.hal.redc.comp.enabled=0 \
-#persist.vendor.vibrator.hal.context.enable=false \
-#persist.vendor.vibrator.hal.context.scale=40 \
-#persist.vendor.vibrator.hal.context.fade=true \
-#persist.vendor.vibrator.hal.context.cooldowntime=1600 \
-#persist.vendor.vibrator.hal.context.settlingtime=5000
+ACTUATOR_MODEL := luxshare_ict_081545
+ADAPTIVE_HAPTICS_FEATURE := adaptive_haptics_v1
+PRODUCT_VENDOR_PROPERTIES += \
+    persist.vendor.vibrator.hal.chirp.enabled=0 \
+    ro.vendor.vibrator.hal.device.mass=0.222 \
+    ro.vendor.vibrator.hal.loc.coeff=2.8 \
+    persist.vendor.vibrator.hal.context.enable=false \
+    persist.vendor.vibrator.hal.context.scale=60 \
+    persist.vendor.vibrator.hal.context.fade=true \
+    persist.vendor.vibrator.hal.context.cooldowntime=1600 \
+    persist.vendor.vibrator.hal.context.settlingtime=5000 \
+    ro.vendor.vibrator.hal.dbc.enable=true \
+    ro.vendor.vibrator.hal.dbc.envrelcoef=8353728 \
+    ro.vendor.vibrator.hal.dbc.riseheadroom=1909602 \
+    ro.vendor.vibrator.hal.dbc.fallheadroom=1909602 \
+    ro.vendor.vibrator.hal.dbc.txlvlthreshfs=2516583 \
+    ro.vendor.vibrator.hal.dbc.txlvlholdoffms=0 \
+    ro.vendor.vibrator.hal.pm.activetimeout=5
 
 # Power HAL config
 PRODUCT_COPY_FILES += \
@@ -326,7 +325,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 $(call soong_config_set,google_displaycolor,displaycolor_platform,zuma)
 PRODUCT_PACKAGES += \
 	android.hardware.composer.hwc3-service.pixel \
-	libdisplaycolor
+	libdisplaycolor \
+	displaycolor_service
 
 # Use FUSE passthrough
 PRODUCT_PRODUCT_PROPERTIES += \

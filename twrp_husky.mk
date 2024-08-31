@@ -14,7 +14,7 @@ $(call inherit-product, device/google/husky/device.mk)
 PRODUCT_DEVICE := husky
 PRODUCT_NAME := twrp_husky
 PRODUCT_BRAND := google
-PRODUCT_MODEL := mainline
+PRODUCT_MODEL := Pixel 8 Pro
 PRODUCT_MANUFACTURER := google
 
 PRODUCT_GMS_CLIENTID_BASE := android-google
