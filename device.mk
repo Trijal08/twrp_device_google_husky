@@ -98,7 +98,11 @@ AB_OTA_POSTINSTALL_CONFIG += \
 # Boot control HAL
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.0-impl \
-    android.hardware.boot@1.0-service
+    android.hardware.boot@1.0-impl.recovery \
+    android.hardware.boot@1.0-service \
+    android.hardware.boot@1.0-impl-wrapper.recovery \
+    android.hardware.boot@1.0-impl-wrapper \
+    android.hardware.boot@1.0-impl.recovery
 
 PRODUCT_PACKAGES += \
     bootctrl.zuma \
@@ -339,6 +343,72 @@ include device/google/gs-common/touch/twoshay/aidl_zuma.mk
 PRODUCT_PACKAGES += \
     libion
 
+# Potential decryption...
+PRODUCT_COPY_FILES += \
+    device/google/husky/prebuilt/compatibility_matrix.1.xml:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/vintf/compatibility_matrix.1.xml \
+    device/google/husky/prebuilt/compatibility_matrix.5.xml:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/vintf/compatibility_matrix.5.xml \
+    device/google/husky/prebuilt/compatibility_matrix.3.xml:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/vintf/compatibility_matrix.3.xml \
+    device/google/husky/prebuilt/compatibility_matrix.xml:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/vintf/compatibility_matrix.xml \
+    device/google/husky/prebuilt/compatibility_matrix.4.xml:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/vintf/compatibility_matrix.4.xml \
+    device/google/husky/prebuilt/android.hardware.security.keymint-service.citadel:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/android.hardware.security.keymint-service.citadel \
+    device/google/husky/prebuilt/citadeld::$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/citadeld \
+    device/google/husky/prebuilt/android.hardware.weaver-service.citadel:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/android.hardware.weaver-service.citadel \
+    device/google/husky/prebuilt/libkeymint_support.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/libkeymint_support.so \
+    device/google/husky/prebuilt/android.hardware.authsecret-impl.nos.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/android.hardware.authsecret-impl.nos.so \
+    device/google/husky/prebuilt/android.hardware.security.keymint-impl.nos.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/android.hardware.security.keymint-impl.nos.so \
+    device/google/husky/prebuilt/android.hardware.weaver-impl.nos.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/android.hardware.weaver-impl.nos.so \
+    device/google/husky/prebuilt/android.hardware.weaver2-impl.nos.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/android.hardware.weaver2-impl.nos.so \
+    device/google/husky/prebuilt/android.hardware.weaver-bridge.nos.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/android.hardware.weaver-bridge.nos.so \
+    device/google/husky/prebuilt/android.hardware.oemlock-impl.nos.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/android.hardware.oemlock-impl.nos.so \
+    device/google/husky/prebuilt/android.hardware.gatekeeper@1.0.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/android.hardware.gatekeeper@1.0.so \
+    device/google/husky/prebuilt/prepdecrypt.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/prepdecrypt.sh
+
+# Citadel
+PRODUCT_PACKAGES += \
+    citadeld \
+    citadel_updater \
+    android.hardware.authsecret-service.citadel \
+    android.hardware.oemlock-service.citadel \
+    android.hardware.weaver-service.citadel \
+    android.hardware.security.keymint-service.citadel \
+    android.hardware.identity-service.citadel \
+    wait_for_strongbox
+
+# Citadel debug stuff
+PRODUCT_PACKAGES_DEBUG += \
+    test_citadel
+
+# Resume on Reboot support
+PRODUCT_PACKAGES += \
+    android.hardware.rebootescrow-service.citadel
+
+# Keymaster configuration
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.software.device_id_attestation.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.device_id_attestation.xml \
+    frameworks/native/data/etc/android.hardware.device_unique_attestation.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.device_unique_attestation.xml
+
 # Device resolution
 TARGET_SCREEN_WIDTH := 1344
 TARGET_SCREEN_HEIGHT := 2992
+
+# Pixelstats broken mic detection
+PRODUCT_PROPERTY_OVERRIDES += vendor.audio.mic_break=true
+
+# Project
+include hardware/google/pixel/common/pixel-common-device.mk
+
+# Factory OTA
+-include vendor/google/factoryota/client/factoryota.mk
+
+# storage
+-include hardware/google/pixel/pixelstats/device.mk
+
+# thermal
+-include hardware/google/pixel/thermal/device.mk
+
+# power HAL
+-include hardware/google/pixel/power-libperfmgr/aidl/device.mk
+
+# mm_event
+-include hardware/google/pixel/mm/device.mk
+#################################################################################

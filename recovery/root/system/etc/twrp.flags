@@ -15,10 +15,8 @@
 /vbmeta				emmc		/dev/block/platform/14700000.ufs/by-name/vbmeta	              flags=slotselect;display="VBMeta";backup=1;flashimg=1
 /vendor_boot		        emmc		/dev/block/platform/14700000.ufs/by-name/vendor_boot          flags=slotselect;display="Vendor_Boot";backup=1;flashimg=1
 /vendor_Kernel_boot             emmc		/dev/block/platform/14700000.ufs/by-name/vendor_kernel_boot   flags=slotselect;display="Vendor_Kernel_Boot";backup=1;flashimg=1
-/usbstorage             	auto    	/dev/block/sdf1    /dev/block/sda     	                      flags=fsflags=utf8;display="USB OTG";storage;wipeingui;removable
 
 # Removable storage
-/usbstorage             	auto 		/dev/block/sdf1			   /dev/block/sda     	      flags=fsflags=utf8;display="USB External Storage";storage;wipeingui;removable
-/usb_otg			auto 		/dev/block/sda1                    /dev/block/sda             flags=fsflags=utf8;display="USB External Storage";storage;wipeingui;removable
+/usb_otg			auto 		/dev/block/sde1                    /dev/block/sde             flags=fsflags=utf8;display="USB Mass Storage";storage;wipeingui;removable
 /sdcard1			auto 		/dev/block/mmcblk1p1               /dev/block/mmcblk1         flags=fsflags=utf8;display="MicroSD";storage;wipeingui;removable
 

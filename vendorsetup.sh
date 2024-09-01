@@ -26,7 +26,7 @@ export FOX_VIRTUAL_AB_DEVICE=1
 
 # Vendor Boot recovery
 export FOX_VENDOR_BOOT_RECOVERY=1
-export FOX_RECOVERY_VENDOR_BOOT_PARTITION="/dev/block/platform/14700000.ufs/by-name/vendor_boot"
+export FOX_RECOVERY_VENDOR_BOOT_PARTITION="/dev/block/platform/13200000.ufs/by-name/vendor_boot"
 
 # Screen specifications
 export OF_STATUS_INDENT_LEFT=48
@@ -51,7 +51,7 @@ export OF_SKIP_FBE_DECRYPTION=1
 # For some reason this is dumb and necessary
 export FOX_BUGGED_AOSP_ARB_WORKAROUND="1601559499"
 
-export OF_QUICK_BACKUP_LIST="/boot;/data;/super;"
+export OF_QUICK_BACKUP_LIST="/boot;/init_boot;/data;"
 
 # Magisk
 export FOX_USE_SPECIFIC_MAGISK_ZIP=~/Magisk/Magisk-v27.0.zip
