@@ -48,6 +48,9 @@ export OF_RUN_POST_FORMAT_PROCESS=1
 # Disable decryption
 export OF_SKIP_FBE_DECRYPTION=1
 
+# Use /data/recovery/Fox/ for Storage
+export FOX_USE_DATA_RECOVERY_FOR_SETTINGS=1
+
 # For some reason this is dumb and necessary
 export FOX_BUGGED_AOSP_ARB_WORKAROUND="1601559499"
 
@@ -70,5 +73,3 @@ export FOX_USE_NANO_EDITOR=1
 export OF_DONT_KEEP_LOG_HISTORY=1
 export OF_SUPPORT_ALL_BLOCK_OTA_UPDATES=0
 export FOX_INSTALLER_DISABLE_AUTOREBOOT=1
-export FOX_USE_DATA_RECOVERY_FOR_SETTINGS=1
-
