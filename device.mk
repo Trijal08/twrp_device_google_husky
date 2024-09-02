@@ -31,11 +31,6 @@ $(call inherit-product-if-exists, vendor/google_devices/husky/proprietary/husky-
 
 #include device/google/shusky-sepolicy/husky-sepolicy.mk
 #include device/google/zuma-sepolicy/zuma-sepolicy.mk
-include hardware/google/pixel/vibrator/cs40l26/device.mk
-include device/google/gs-common/bcmbt/bluetooth.mk
-include device/google/gs-common/touch/stm/stm20.mk
-include device/google/gs-common/touch/gti/gti.mk
-include device/google/gs-common/touch/touchinspector/touchinspector.mk
 
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/recovery/root/fstab.zuma:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/system/etc/fstab.zuma
