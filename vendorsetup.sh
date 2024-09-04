@@ -1,8 +1,6 @@
-export TARGET_ARCH="arm64-v8a"
-
 # Some about us
 export FOX_VERSION="R11.1"
-export OF_MAINTAINER=GamerBoy1234
+export OF_MAINTAINER="GamerBoy1234"
 
 # Build environment stuffs
 export FOX_BUILD_DEVICE="Pixel8Pro"
@@ -10,11 +8,10 @@ export ALLOW_MISSING_DEPENDENCIES=true
 export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1
 export TARGET_DEVICE_ALT="Pixel8Pro, GooglePixel8Pro, husky, Husky"
 export FOX_TARGET_DEVICES="Pixel8Pro, GooglePixel8Pro, husky, Husky"
-export BUILD_USERNAME="nobody"
-export BUILD_HOSTNAME="android-build"
 
 # Use magisk boot for patching
 export OF_USE_MAGISKBOOT=1
+export FOX_USE_UPDATED_MAGISKBOOT=1
 export OF_USE_MAGISKBOOT_FOR_ALL_PATCHES=1
 
 # Vanilla build
@@ -75,6 +72,9 @@ export OF_SUPPORT_ALL_BLOCK_OTA_UPDATES=0
 export FOX_INSTALLER_DISABLE_AUTOREBOOT=1
 export OF_NO_REFLASH_CURRENT_ORANGEFOX=1
 export FOX_REPLACE_TOOLBOX_GETPROP=1
-export FOX_USE_TAR_BINARY=1
 export FOX_BASH_TO_SYSTEM_BIN=1
-export FOX_USE_UPDATED_MAGISKBOOT=1
+export FOX_ENABLE_APP_MANAGER=1
+export FOX_USE_SED_BINARY=1
+export FOX_USE_XZ_UTILS=1
+export FOX_VARIANT="default"
+export OF_USE_GREEN_LED=1
