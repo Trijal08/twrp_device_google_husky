@@ -6,11 +6,12 @@
 #
 
 DEVICE_PATH := device/google/husky
+DEVICE_COMMON_PATH := device/google/zuma
 
-include device/google/zuma/BoardConfig-common.mk
+include $(DEVICE_COMMON_PATH)/BoardConfig-common.mk
 include vendor/google_devices/husky/BoardConfigVendor.mk
 
-TARGET_BOARD_INFO_FILE := device/google/husky/board-info.txt
+TARGET_BOARD_INFO_FILE := $(DEVICE_PATH)/board-info.txt
 TARGET_BOOTLOADER_BOARD_NAME := husky
 
 # For building with minimal manifest
@@ -25,15 +26,13 @@ BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
 # A/B
 AB_OTA_UPDATER := true
 AB_OTA_PARTITIONS += \
-    vendor_dlkm \
-    init_boot \
     system \
-    product \
     system_ext \
-    system_dlkm \
-    vbmeta \
+    product \
     vendor \
-    boot
+    vendor_dlkm \
+    boot \
+    vbmeta
 
 # Architecture
 TARGET_SOC := zuma
@@ -45,10 +44,21 @@ USES_DEVICE_GOOGLE_HUSKY := true
 USES_DEVICE_GOOGLE_SHUSKY := true
 
 TARGET_ARCH := arm64
-TARGET_ARCH_VARIANT := armv8-2a
+TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
-TARGET_CPU_VARIANT := cortex-a55
+TARGET_CPU_ABI2 := 
+TARGET_CPU_VARIANT := generic
 TARGET_CPU_VARIANT_RUNTIME := cortex-a55
+
+TARGET_2ND_ARCH := arm
+TARGET_2ND_ARCH_VARIANT := armv7-a-neon
+TARGET_2ND_CPU_ABI := armeabi-v7a
+TARGET_2ND_CPU_ABI2 := armeabi
+TARGET_2ND_CPU_VARIANT := generic
+TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a53
+
+ENABLE_CPUSETS := true
+ENABLE_SCHEDBOOST := true
 
 # APEX
 DEXPREOPT_GENERATE_APEX_IMAGE := true
@@ -60,26 +70,46 @@ TARGET_NO_BOOTLOADER := true
 # Display
 TARGET_SCREEN_DENSITY := 480
 TARGET_USES_VULKAN := true
+BOARD_EGL_CFG := $(DEVICE_COMMON_PATH)/conf/egl.cfg
+
+# EMULATOR common modules
+BOARD_EMULATOR_COMMON_MODULES := liblight
 
 # Kernel
-BOARD_BOOTIMG_HEADER_VERSION := 4
-BOARD_KERNEL_BASE := 0x10000000
-BOARD_KERNEL_CMDLINE := exynos_drm.load_sequential=1 g2d.load_sequential=1 samsung_iommu_v9.load_sequential=1 swiotlb=noforce disable_dma32=on earlycon=exynos4210,0x10870000 console=ttySAC0,115200 androidboot.console=ttySAC0 printk.devkmsg=on cma_sysfs.experimental=Y cgroup_disable=memory rcupdate.rcu_expedited=1 rcu_nocbs=all swiotlb=1024 cgroup.memory=nokmem sysctl.kernel.sched_pelt_multiplier=4 kasan=off at24.write_timeout=100 log_buf_len=1024K bootconfig
-BOARD_KERNEL_PAGESIZE := 2048
-BOARD_RAMDISK_OFFSET := 0x01000000
-BOARD_KERNEL_TAGS_OFFSET := 0x00000100
-BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
-BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
-BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
-BOARD_KERNEL_IMAGE_NAME := Image
-TARGET_KERNEL_CONFIG := zuma_defconfig
-TARGET_KERNEL_SOURCE := kernel/google/zuma/private/soc/gs
+TARGET_KERNEL_DTBO_PREFIX := dts/
+TARGET_KERNEL_DTBO := google-devices/shusky/dtbo.img
+TARGET_KERNEL_DTB := \
+    google-devices/husky/google-base/gs201-a0.dtb \
+    google-devices/husky/google-base/gs201-b0.dtb \
+    google-devices/husky/google-base/gs201-b0_v2-ipop.dtb
 
-# Kernel - prebuilt
-TARGET_FORCE_PREBUILT_KERNEL := true
-ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
-endif
+# Kernel modules
+BOARD_VENDOR_KERNEL_MODULES_LOAD_RAW := $(strip $(shell cat $(DEVICE_PATH)/recovery/root/vendor_dlkm.modules.load))
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(foreach m,$(BOARD_VENDOR_KERNEL_MODULES_LOAD_RAW),$(notdir $(m)))
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD_RAW := $(strip $(shell cat $(DEVICE_PATH)/recovery/root/vendor_kernel_boot.modules.load))
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(foreach m,$(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD_RAW),$(notdir $(m)))
+BOOT_KERNEL_MODULES := $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD)
+BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(DEVICE_PATH)/recovery/root/vendor_dlkm.modules.blocklist
+TARGET_KERNEL_EXT_MODULE_ROOT := kernel/google/zuma/google-modules
+
+TARGET_KERNEL_EXT_MODULES := \
+    aoc/usb \
+    bms \
+    display/samsung \
+    edgetpu/rio/drivers/edgetpu \
+    gpu/mali_kbase \
+    gpu/mali_pixel \
+    gxp/zuma \
+    lwis \
+    power/reset \
+    touch/common \
+    touch/fts/fst2 \
+    touch/fts/ftm5 \
+    touch/goodix \
+    uwb/qorvo/qm35 \
+    uwb/qorvo/qm35s \
+    video/gchips \
+    ../google-devices/shusky/display
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
@@ -132,8 +162,8 @@ BOARD_USES_GENERIC_KERNEL_IMAGE := true
 BOARD_MOVE_GSI_AVB_KEYS_TO_VENDOR_BOOT := true
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_KERNEL_IMAGE_NAME := Image.lz4
-TARGET_KERNEL_CONFIG := zuma_defconfig
-TARGET_KERNEL_SOURCE := kernel/google/zuma/private/soc/gs
+TARGET_KERNEL_CONFIG := gki_defconfig
+TARGET_KERNEL_SOURCE := kernel/google/zuma
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image
 BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)/prebuilt/dtbs
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
@@ -175,22 +205,36 @@ BOARD_USES_HWC_SERVICES := true
 # Recovery
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
+TARGET_RECOVERY_WIPE := $(DEVICE_PATH)/recovery.wipe
 
-# Security patch level
-VENDOR_SECURITY_PATCH := 2021-08-01
+# Ramdisk compression
+BOARD_RAMDISK_USE_LZ4 := true
 
 # Verified Boot
 BOARD_AVB_ENABLE := true
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
 
+# Enable chained vbmeta for boot images
+BOARD_AVB_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
+BOARD_AVB_BOOT_ALGORITHM := SHA256_RSA2048
+BOARD_AVB_BOOT_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
+BOARD_AVB_BOOT_ROLLBACK_INDEX_LOCATION := 2
+
+# Enable chained vbmeta for init_boot images
+BOARD_AVB_INIT_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
+BOARD_AVB_INIT_BOOT_ALGORITHM := SHA256_RSA2048
+BOARD_AVB_INIT_BOOT_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
+BOARD_AVB_INIT_BOOT_ROLLBACK_INDEX_LOCATION := 4
+
 # Hack: prevent anti rollback
-PLATFORM_SECURITY_PATCH := 2099-12-31# 12.1 manifest requirements
-TARGET_SUPPORTS_64_BIT_APPS := true
-BUILD_BROKEN_DUP_RULES := true
-BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
-BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
-VENDOR_SECURITY_PATCH := 2099-12-31
-PLATFORM_VERSION := 16.1.0
+PLATFORM_VERSION := 99.87.36
+PLATFORM_SECURITY_PATCH := 2127-12-31
+PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
+VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
+BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
+
+# sepolicy
+SELINUX_IGNORE_NEVERALLOWS := true
 
 # Load Touch modules files
 TW_LOAD_VENDOR_MODULES := "heatmap.ko touch_offload.ko ftm5.ko sec_touch.ko goodix_brl_touch.ko goog_touch_interface.ko"
