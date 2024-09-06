@@ -62,26 +62,31 @@ PRODUCT_TARGET_VNDK_VERSION := 32
 # define hardware platform
 PRODUCT_PLATFORM := zuma
 
-# A/B OTA
+# A/B
 AB_OTA_UPDATER := true
-
 AB_OTA_PARTITIONS += \
+    init_boot \
     boot \
     dtbo \
     odm \
     product \
     system \
+    system_dlkm \
     system_ext \
     vbmeta \
+    vendor_dlkm \
     vbmeta_system \
+    vbmeta_vendor \
     vendor \
-    vendor_boot
+    vendor_boot \
+    vendor_boot_kernel
 
 PRODUCT_PACKAGES += \
     otapreopt_script \
     cppreopts.sh \
     checkpoint_gc \
     update_engine \
+    update_engine_client \
     update_engine_sideload \
     update_verifier
 
@@ -91,13 +96,21 @@ AB_OTA_POSTINSTALL_CONFIG += \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true
 
+# Build bootctl
+PRODUCT_PACKAGES += \
+        bootctl
+RECOVERY_BINARY_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/bootctl
+
 # Boot control HAL
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.0-impl \
-    android.hardware.boot@1.0-service \
-    android.hardware.boot@1.0-impl-wrapper.recovery \
-    android.hardware.boot@1.0-impl-wrapper \
-    android.hardware.boot@1.0-impl.recovery
+    android.hardware.boot@1.2-impl-qti \
+    android.hardware.boot@1.2-impl-qti.recovery \
+    android.hardware.boot@1.2-impl-pixel-legacy \
+    android.hardware.boot@1.2-impl-pixel-legacy.recovery \
+    android.hardware.boot@1.2-service \
+    android.hardware.boot@1.0-impl-1.2-pixel-legacy \
+    android.hardware.boot@1.0-impl-1.2-pixel-legacy.recovery \
+    android.hardware.boot@1.0-service
 
 PRODUCT_PACKAGES += \
     bootctrl.zuma \
@@ -111,6 +124,9 @@ PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.0-impl-mock \
     android.hardware.fastboot@1.0-impl-mock.recovery \
     fastbootd 
+
+# Add default implementation of fastboot HAL.
+PRODUCT_PACKAGES += android.hardware.fastboot@1.1-impl-mock
 
 # vndservicemanager and vndservice no longer included in API 30+, however needed by vendor code.
 PRODUCT_PACKAGES += vndservicemanager

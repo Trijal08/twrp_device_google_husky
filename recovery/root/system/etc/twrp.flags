@@ -14,9 +14,9 @@
 /super                          emmc            /dev/block/platform/13200000.ufs/by-name/super	              flags=slotselect;display="Super";backup=1;flashimg=1
 /vbmeta				emmc		/dev/block/platform/13200000.ufs/by-name/vbmeta	              flags=slotselect;display="VBMeta";backup=1;flashimg=1
 /vendor_boot		        emmc		/dev/block/platform/13200000.ufs/by-name/vendor_boot          flags=slotselect;display="Vendor_Boot";backup=1;flashimg=1
-/vendor_Kernel_boot             emmc		/dev/block/platform/13200000.ufs/by-name/vendor_kernel_boot   flags=slotselect;display="Vendor_Kernel_Boot";backup=1;flashimg=1
+/vendor_kernel_boot             emmc		/dev/block/platform/13200000.ufs/by-name/vendor_kernel_boot   flags=slotselect;display="Vendor_Kernel_Boot";backup=1;flashimg=1
 
 # Removable storage
-/usbstorage			auto 		/dev/block/sde1                    /dev/block/sde             flags=fsflags=utf8;display="USB Mass Storage";storage;wipeingui;removable
+/usb_otg			auto 		/dev/block/sde1                    /dev/block/sde             flags=fsflags=utf8;display="USB Mass Storage";storage;wipeingui;removable
 /sdcard1			auto 		/dev/block/mmcblk1p1               /dev/block/mmcblk1         flags=fsflags=utf8;display="MicroSD";storage;wipeingui;removable
 
