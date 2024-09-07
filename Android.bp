@@ -13,5 +13,6 @@ soong_namespace {
 		"hardware/google/pixel/bootctrl",
 		"device/google/husky/bootctrl",
 		"device/google/husky/gpt-utils",
+		"device/google/zuma/pixelstats",
 	],
 }

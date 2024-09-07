@@ -72,9 +72,3 @@ service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-ser
     class hal
     user system
     group system
-
-service vendor.boot-hal-1-0 /vendor/bin/hw/android.hardware.boot@1.0-service
-    interface android.hardware.boot@1.0::IBootControl default
-    class early_hal
-    user root
-    group root

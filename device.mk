@@ -29,9 +29,7 @@ $(call inherit-product-if-exists, vendor/google_devices/zuma/proprietary/device-
 $(call inherit-product-if-exists, vendor/google_devices/husky/proprietary/husky/device-vendor-husky.mk)
 $(call inherit-product-if-exists, vendor/google_devices/husky/proprietary/husky-vendor.mk)
 
-#include device/google/shusky-sepolicy/husky-sepolicy.mk
-#include device/google/zuma-sepolicy/zuma-sepolicy.mk
-
+# Copy fstab file to ramdisk
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/recovery/root/fstab.zuma:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/system/etc/fstab.zuma
 
@@ -48,7 +46,6 @@ PRODUCT_COPY_FILES += \
 # Init files
 PRODUCT_COPY_FILES += \
 	device/google/husky/recovery/root/init.recovery.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.recovery.usb.rc \
-	device/google/husky/recovery/root/init.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.rc \
 	device/google/husky/recovery/root/vendor/etc/ueventd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.rc
 
 # Device Manifest file
@@ -66,6 +63,7 @@ PRODUCT_PLATFORM := zuma
 AB_OTA_UPDATER := true
 
 AB_OTA_PARTITIONS += \
+    init_boot \
     boot \
     dtbo \
     odm \
@@ -74,9 +72,12 @@ AB_OTA_PARTITIONS += \
     system_dlkm \
     system_ext \
     vbmeta \
+    vendor_dlkm \
     vbmeta_system \
+    vbmeta_vendor \
     vendor \
-    vendor_boot
+    vendor_boot \
+    vendor_boot_kernel
 
 PRODUCT_PACKAGES += \
     otapreopt_script \
@@ -111,10 +112,7 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.0-impl-mock \
     android.hardware.fastboot@1.0-impl-mock.recovery \
-    fastbootd
-
-# Add default implementation of fastboot HAL.
-PRODUCT_PACKAGES += android.hardware.fastboot@1.1-impl-mock
+    fastbootd 
 
 # vndservicemanager and vndservice no longer included in API 30+, however needed by vendor code.
 PRODUCT_PACKAGES += vndservicemanager
@@ -126,7 +124,7 @@ PRODUCT_PACKAGES += \
     libhidltransport.vendor \
     libhwbinder.vendor
 
-# display
+# Display Config
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.ignore_hdr_camera_layers=true
 
 PRODUCT_COPY_FILES += \

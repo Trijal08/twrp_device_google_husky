@@ -39,6 +39,12 @@ TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_VARIANT := cortex-a55
 TARGET_CPU_VARIANT_RUNTIME := cortex-a55
 
+# Enable 64-bit for non-zygote.
+ZYGOTE_FORCE_64 := true
+
+# Force any prefer32 targets to be compiled as 64 bit.
+IGNORE_PREFER32_ON_DEVICE := true
+
 ENABLE_CPUSETS := true
 ENABLE_SCHEDBOOST := true
 
@@ -161,30 +167,8 @@ BOARD_MKBOOTIMG_ARGS += --vendor_cmdline $(VENDOR_CMDLINE)
 # Platform
 TARGET_BOARD_PLATFORM := zuma
 
-# Colour fix stuff
-TARGET_RECOVERY_PIXEL_FORMAT := ABGR_8888
-TARGET_RECOVERY_UI_MARGIN_HEIGHT := 165
-TARGET_RECOVERY_UI_LIB := \
-	librecovery_ui_pixel \
-# HWComposer
-BOARD_HWC_VERSION := hwc3
-TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := false
-BOARD_HDMI_INCAPABLE := true
-TARGET_USES_HWC2 := true
-HWC_SUPPORT_RENDER_INTENT := true
-HWC_SUPPORT_COLOR_TRANSFORM := true
-#BOARD_USES_DISPLAYPORT := true
-# if AFBC is enabled, must set ro.vendor.ddk.set.afbc=1
-BOARD_USES_EXYNOS_AFBC_FEATURE := true
-#BOARD_USES_HDRUI_GLES_CONVERSION := true
-
-BOARD_LIBACRYL_DEFAULT_COMPOSITOR := fimg2d_zuma
-BOARD_LIBACRYL_G2D_HDR_PLUGIN := libacryl_hdr_plugin
-
-# HWCServices
-BOARD_USES_HWC_SERVICES := true
-
 # Recovery
+TARGET_RECOVERY_PIXEL_FORMAT := ABGR_8888
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 TARGET_RECOVERY_WIPE := $(DEVICE_PATH)/recovery.wipe
@@ -214,9 +198,6 @@ PLATFORM_SECURITY_PATCH := 2127-12-31
 PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
 VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
-
-# sepolicy
-SELINUX_IGNORE_NEVERALLOWS := true
 
 # Load Touch modules files
 TW_LOAD_VENDOR_MODULES := "heatmap.ko touch_offload.ko ftm5.ko sec_touch.ko goodix_brl_touch.ko goog_touch_interface.ko"
