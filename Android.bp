@@ -12,5 +12,6 @@ soong_namespace {
 		"device/google/gs-common/bootctrl/1.2",
 		"hardware/google/pixel/bootctrl",
 		"device/google/husky/bootctrl",
+		"device/google/husky/gpt-utils",
 	],
 }

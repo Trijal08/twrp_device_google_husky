@@ -103,14 +103,13 @@ RECOVERY_BINARY_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/bootctl
 
 # Boot control HAL
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.2-impl-qti \
-    android.hardware.boot@1.2-impl-qti.recovery \
+    android.hardware.boot@1.2-impl \
+    android.hardware.boot@1.2-impl.recovery \
+    android.hardware.boot@1.2-impl-wrapper \
+    android.hardware.boot@1.2-impl-wrapper.recovery \
     android.hardware.boot@1.2-impl-pixel-legacy \
     android.hardware.boot@1.2-impl-pixel-legacy.recovery \
-    android.hardware.boot@1.2-service \
-    android.hardware.boot@1.0-impl-1.2-pixel-legacy \
-    android.hardware.boot@1.0-impl-1.2-pixel-legacy.recovery \
-    android.hardware.boot@1.0-service
+    android.hardware.boot@1.2-service
 
 PRODUCT_PACKAGES += \
     bootctrl.zuma \
