@@ -62,10 +62,10 @@ PRODUCT_TARGET_VNDK_VERSION := 32
 # define hardware platform
 PRODUCT_PLATFORM := zuma
 
-# A/B
+# A/B OTA
 AB_OTA_UPDATER := true
+
 AB_OTA_PARTITIONS += \
-    init_boot \
     boot \
     dtbo \
     odm \
@@ -74,19 +74,15 @@ AB_OTA_PARTITIONS += \
     system_dlkm \
     system_ext \
     vbmeta \
-    vendor_dlkm \
     vbmeta_system \
-    vbmeta_vendor \
     vendor \
-    vendor_boot \
-    vendor_boot_kernel
+    vendor_boot
 
 PRODUCT_PACKAGES += \
     otapreopt_script \
     cppreopts.sh \
     checkpoint_gc \
     update_engine \
-    update_engine_client \
     update_engine_sideload \
     update_verifier
 
@@ -96,20 +92,13 @@ AB_OTA_POSTINSTALL_CONFIG += \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true
 
-# Build bootctl
-PRODUCT_PACKAGES += \
-        bootctl
-RECOVERY_BINARY_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/bootctl
-
 # Boot control HAL
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-impl \
-    android.hardware.boot@1.2-impl.recovery \
-    android.hardware.boot@1.2-impl-wrapper \
+    android.hardware.boot@1.2-service \
     android.hardware.boot@1.2-impl-wrapper.recovery \
-    android.hardware.boot@1.2-impl-pixel-legacy \
-    android.hardware.boot@1.2-impl-pixel-legacy.recovery \
-    android.hardware.boot@1.2-service
+    android.hardware.boot@1.2-impl-wrapper \
+    android.hardware.boot@1.2-impl.recovery
 
 PRODUCT_PACKAGES += \
     bootctrl.zuma \
@@ -122,7 +111,7 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.0-impl-mock \
     android.hardware.fastboot@1.0-impl-mock.recovery \
-    fastbootd 
+    fastbootd
 
 # Add default implementation of fastboot HAL.
 PRODUCT_PACKAGES += android.hardware.fastboot@1.1-impl-mock
@@ -182,10 +171,6 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += vendor.display.preferred_mode=1008x2244@12
 # Set support hide display cutout feature
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.support_hide_display_cutout=true
-
-# Touch
-PRODUCT_COPY_FILES += \
-	frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
 
 # USB HAL
 PRODUCT_PACKAGES += \
@@ -291,10 +276,6 @@ PRODUCT_PACKAGES += \
     com.google.hardware.pixel.display-V5-ndk.vendor \
     com.google.hardware.pixel.display-V6-ndk.vendor
 
-# Shell scripts
-PRODUCT_COPY_FILES += \
-	device/google/zuma/disable_contaminant_detection.sh:$(TARGET_COPY_OUT_VENDOR)/bin/hw/disable_contaminant_detection.sh
-
 # PowerStats HAL
 PRODUCT_PACKAGES += \
 	android.hardware.power.stats-service.pixel
@@ -328,6 +309,11 @@ include device/google/gs-common/touch/twoshay/aidl_zuma.mk
 # Build libion
 PRODUCT_PACKAGES += \
     libion
+
+# vendor.display.config
+RECOVERY_LIBRARY_SOURCE_FILES += \
+    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@1.0.so \
+    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@2.0.so
 
 # Potential decryption...
 PRODUCT_COPY_FILES += \
