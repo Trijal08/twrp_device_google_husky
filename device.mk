@@ -64,29 +64,11 @@ PRODUCT_PLATFORM := zuma
 # A/B OTA
 AB_OTA_UPDATER := true
 
-AB_OTA_PARTITIONS += \
-    init_boot \
-    boot \
-    dtbo \
-    odm \
-    product \
-    system \
-    system_dlkm \
-    system_ext \
-    vbmeta \
-    vendor_dlkm \
-    vbmeta_system \
-    vbmeta_vendor \
-    vendor \
-    vendor_boot \
-    vendor_boot_kernel
-
 PRODUCT_PACKAGES += \
     otapreopt_script \
     cppreopts.sh \
     checkpoint_gc \
     update_engine \
-    update_engine_client \
     update_engine_sideload \
     update_verifier
 
@@ -99,14 +81,15 @@ AB_OTA_POSTINSTALL_CONFIG += \
 # Boot control HAL
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-impl \
-    android.hardware.boot@1.2-service \
-    android.hardware.boot@1.2-impl-wrapper.recovery \
+    android.hardware.boot@1.2-impl.recovery \
     android.hardware.boot@1.2-impl-wrapper \
-    android.hardware.boot@1.2-impl.recovery
+    android.hardware.boot@1.2-impl-wrapper.recovery \
+    android.hardware.boot@1.2-service
 
 PRODUCT_PACKAGES += \
     bootctrl.zuma \
-    bootctrl.zuma.recovery
+    bootctrl.zuma.recovery \
+    bootctl
 
 # Dynamic partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
@@ -234,6 +217,17 @@ PRODUCT_PACKAGES += \
     nos_app_weaver:64 \
     pixelpowerstats_provider_aidl_interface-cpp.vendor:64
 
+# Additional binaries & libraries needed for recovery
+TARGET_RECOVERY_DEVICE_MODULES += \
+    android.hidl.base@1.0 \
+    libcap \
+    libion \
+    libpcrecpp \
+    libxml2 \
+    libfs \
+    libfs_mgr \
+    libfs_mgr_binder
+
 # Misc interfaces
 PRODUCT_PACKAGES += \
     android.frameworks.stats-V1-ndk.vendor:32 \
@@ -275,7 +269,8 @@ PRODUCT_PACKAGES += \
     android.hardware.wifi@1.6.vendor:64 \
     com.google.hardware.pixel.display-V4-ndk.vendor:64 \
     com.google.hardware.pixel.display-V5-ndk.vendor \
-    com.google.hardware.pixel.display-V6-ndk.vendor
+    com.google.hardware.pixel.display-V6-ndk.vendor \
+    android.hardware.boot-V1-ndk
 
 # PowerStats HAL
 PRODUCT_PACKAGES += \
@@ -306,10 +301,6 @@ PRODUCT_PRODUCT_PROPERTIES += \
 
 # Touch service
 include device/google/gs-common/touch/twoshay/aidl_zuma.mk
-
-# Build libion
-PRODUCT_PACKAGES += \
-    libion
 
 # vendor.display.config
 RECOVERY_LIBRARY_SOURCE_FILES += \
