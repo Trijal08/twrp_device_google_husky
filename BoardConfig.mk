@@ -64,21 +64,24 @@ BOARD_EGL_CFG := $(DEVICE_COMMON_PATH)/conf/egl.cfg
 BOARD_EMULATOR_COMMON_MODULES := liblight
 
 # Kernel
-TARGET_KERNEL_DTBO_PREFIX := dts/
-TARGET_KERNEL_DTBO := google-devices/shusky/dtbo.img
-TARGET_KERNEL_DTB := \
-    google-devices/husky/google-base/gs201-a0.dtb \
-    google-devices/husky/google-base/gs201-b0.dtb \
-    google-devices/husky/google-base/gs201-b0_v2-ipop.dtb
+BOARD_BOOTIMG_HEADER_VERSION := 4
+BOARD_KERNEL_BASE := 0x10000000
+BOARD_KERNEL_CMDLINE := exynos_drm.load_sequential=1 g2d.load_sequential=1 samsung_iommu_v9.load_sequential=1 swiotlb=noforce disable_dma32=on earlycon=exynos4210,0x10870000 console=ttySAC0,115200 androidboot.console=ttySAC0 printk.devkmsg=on cma_sysfs.experimental=Y cgroup_disable=memory rcupdate.rcu_expedited=1 rcu_nocbs=all swiotlb=1024 cgroup.memory=nokmem sysctl.kernel.sched_pelt_multiplier=4 kasan=off at24.write_timeout=100 log_buf_len=1024K bootconfig
+BOARD_KERNEL_PAGESIZE := 2048
+BOARD_RAMDISK_OFFSET := 0x01000000
+BOARD_KERNEL_TAGS_OFFSET := 0x00000100
+BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
+BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
+BOARD_KERNEL_IMAGE_NAME := Image
+TARGET_KERNEL_CONFIG := gki_defconfig
+TARGET_KERNEL_SOURCE := kernel/google/zuma/private/soc/gs
 
-# Kernel modules
-BOARD_VENDOR_KERNEL_MODULES_LOAD_RAW := $(strip $(shell cat $(DEVICE_PATH)/recovery/root/vendor_dlkm.modules.load))
-BOARD_VENDOR_KERNEL_MODULES_LOAD := $(foreach m,$(BOARD_VENDOR_KERNEL_MODULES_LOAD_RAW),$(notdir $(m)))
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD_RAW := $(strip $(shell cat $(DEVICE_PATH)/recovery/root/vendor_kernel_boot.modules.load))
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(foreach m,$(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD_RAW),$(notdir $(m)))
-BOOT_KERNEL_MODULES := $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD)
-BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(DEVICE_PATH)/recovery/root/vendor_dlkm.modules.blocklist
-TARGET_KERNEL_EXT_MODULE_ROOT := kernel/google/zuma/google-modules
+# Kernel - prebuilt
+TARGET_FORCE_PREBUILT_KERNEL := true
+ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
+endif
 
 TARGET_KERNEL_EXT_MODULES := \
     aoc/usb \
@@ -151,7 +154,7 @@ BOARD_MOVE_GSI_AVB_KEYS_TO_VENDOR_BOOT := true
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_KERNEL_IMAGE_NAME := Image.lz4
 TARGET_KERNEL_CONFIG := gki_defconfig
-TARGET_KERNEL_SOURCE := kernel/google/zuma
+TARGET_KERNEL_SOURCE := kernel/google/zuma/private/soc/gs
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image
 BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)/prebuilt/dtbs
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
@@ -173,6 +176,9 @@ TARGET_RECOVERY_UI_MARGIN_HEIGHT := 165
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 TARGET_RECOVERY_WIPE := $(DEVICE_PATH)/recovery.wipe
+
+# Security patch level
+VENDOR_SECURITY_PATCH := 2021-08-01
 
 # Ramdisk compression
 BOARD_RAMDISK_USE_LZ4 := true
