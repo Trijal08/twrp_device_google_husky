@@ -80,16 +80,12 @@ AB_OTA_POSTINSTALL_CONFIG += \
 
 # Boot control HAL
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.2-impl \
-    android.hardware.boot@1.2-impl.recovery \
-    android.hardware.boot@1.2-impl-wrapper \
-    android.hardware.boot@1.2-impl-wrapper.recovery \
-    android.hardware.boot@1.2-service
+    android.hardware.boot-service.default-pixel \
+    android.hardware.boot-service.default_recovery-pixel
 
 PRODUCT_PACKAGES += \
     bootctrl.zuma \
-    bootctrl.zuma.recovery \
-    bootctl
+    bootctrl.zuma.recovery
 
 # Dynamic partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
