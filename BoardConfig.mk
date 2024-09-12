@@ -67,9 +67,8 @@ BOARD_EMULATOR_COMMON_MODULES := liblight
 TARGET_KERNEL_DTBO_PREFIX := dts/
 TARGET_KERNEL_DTBO := google-devices/shusky/dtbo.img
 TARGET_KERNEL_DTB := \
-    google-devices/husky/google-base/gs201-a0.dtb \
-    google-devices/husky/google-base/gs201-b0.dtb \
-    google-devices/husky/google-base/gs201-b0_v2-ipop.dtb
+    google-devices/husky/google-base/zuma-a0-ipop.dtb \
+    google-devices/husky/google-base/zuma-b0-ipop.dtb
 
 # Kernel modules
 BOARD_VENDOR_KERNEL_MODULES_LOAD_RAW := $(strip $(shell cat $(DEVICE_PATH)/recovery/root/vendor_dlkm.modules.load))
