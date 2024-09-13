@@ -85,7 +85,8 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     bootctrl.zuma \
-    bootctrl.zuma.recovery
+    bootctrl.zuma.recovery \
+    bootctl
 
 # Dynamic partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
