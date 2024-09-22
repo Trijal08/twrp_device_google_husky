@@ -48,6 +48,7 @@ PRODUCT_COPY_FILES += \
 	device/google/husky/recovery/root/init.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.rc \
 	device/google/husky/recovery/root/init.recovery.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.recovery.usb.rc \
 	device/google/husky/recovery/root/android.hardware.health-service.zuma_recovery.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/android.hardware.health-service.zuma_recovery.rc \
+	device/google/husky/recovery/root/android.hardware.boot-service.default_recovery-pixel.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/android.hardware.boot-service.default_recovery-pixel.rc \
 	device/google/husky/recovery/root/vendor/etc/ueventd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.rc
 
 # Device Manifest file
@@ -79,9 +80,15 @@ AB_OTA_POSTINSTALL_CONFIG += \
     POSTINSTALL_OPTIONAL_system=true
 
 # Boot control HAL
+#PRODUCT_PACKAGES += \
+#    android.hardware.boot-service.default-pixel \
+#    android.hardware.boot-service.default_recovery-pixel
 PRODUCT_PACKAGES += \
-    android.hardware.boot-service.default-pixel \
-    android.hardware.boot-service.default_recovery-pixel
+    android.hardware.boot@1.2-impl \
+    android.hardware.boot@1.2-impl.recovery \
+    android.hardware.boot@1.2-impl-wrapper \
+    android.hardware.boot@1.2-impl-wrapper.recovery \
+    android.hardware.boot@1.2-service
 
 PRODUCT_PACKAGES += \
     bootctrl.zuma \
@@ -145,13 +152,17 @@ PRODUCT_COPY_FILES += \
 	device/google/shusky/husky/panel_config_google-hk3_cal0.pb:$(TARGET_COPY_OUT_VENDOR)/etc/panel_config_google-hk3_cal0.pb
 
 # Display RRS default Config
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += persist.vendor.display.primary.boot_config=1344x2992@120
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += persist.vendor.display.primary.boot_config=1008x2244@120
 # TODO: b/250788756 - the property will be phased out after HWC loads user-preferred mode
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += vendor.display.preferred_mode=1344x2992@120
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += vendor.display.preferred_mode=1008x2244@120
 
 # Set support hide display cutout feature
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.support_hide_display_cutout=true
+
+# Touch
+PRODUCT_COPY_FILES += \
+	frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
 
 # USB HAL
 PRODUCT_PACKAGES += \
@@ -256,6 +267,10 @@ PRODUCT_PACKAGES += \
     com.google.hardware.pixel.display-V4-ndk.vendor:64 \
     com.google.hardware.pixel.display-V5-ndk.vendor \
     com.google.hardware.pixel.display-V6-ndk.vendor
+
+# Shell scripts
+PRODUCT_COPY_FILES += \
+	device/google/zuma/disable_contaminant_detection.sh:$(TARGET_COPY_OUT_VENDOR)/bin/hw/disable_contaminant_detection.sh
 
 # PowerStats HAL
 PRODUCT_PACKAGES += \

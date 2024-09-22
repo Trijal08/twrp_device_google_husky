@@ -9,7 +9,7 @@ DEVICE_PATH := device/google/husky
 DEVICE_COMMON_PATH := device/google/zuma
 
 include $(DEVICE_COMMON_PATH)/BoardConfig-common.mk
-include vendor/google_devices/husky/BoardConfigVendor.mk
+include vendor/google/husky/BoardConfigVendor.mk
 
 TARGET_BOARD_INFO_FILE := $(DEVICE_PATH)/board-info.txt
 TARGET_BOOTLOADER_BOARD_NAME := husky
@@ -151,7 +151,7 @@ BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_KERNEL_IMAGE_NAME := Image.lz4
 TARGET_KERNEL_CONFIG := gki_defconfig
 TARGET_KERNEL_SOURCE := kernel/google/zuma
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.lz4
 BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)/prebuilt/dtbs
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
 BOARD_MKBOOTIMG_ARGS += --base $(BOARD_KERNEL_BASE)
@@ -166,9 +166,30 @@ BOARD_MKBOOTIMG_ARGS += --vendor_cmdline $(VENDOR_CMDLINE)
 # Platform
 TARGET_BOARD_PLATFORM := zuma
 
-# Recovery
+# Colour fix stuff
 TARGET_RECOVERY_PIXEL_FORMAT := ABGR_8888
 TARGET_RECOVERY_UI_MARGIN_HEIGHT := 165
+TARGET_RECOVERY_UI_LIB := \
+	librecovery_ui_pixel \
+# HWComposer
+BOARD_HWC_VERSION := hwc3
+TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := false
+BOARD_HDMI_INCAPABLE := true
+TARGET_USES_HWC2 := true
+HWC_SUPPORT_RENDER_INTENT := true
+HWC_SUPPORT_COLOR_TRANSFORM := true
+#BOARD_USES_DISPLAYPORT := true
+# if AFBC is enabled, must set ro.vendor.ddk.set.afbc=1
+BOARD_USES_EXYNOS_AFBC_FEATURE := true
+#BOARD_USES_HDRUI_GLES_CONVERSION := true
+
+BOARD_LIBACRYL_DEFAULT_COMPOSITOR := fimg2d_zuma
+BOARD_LIBACRYL_G2D_HDR_PLUGIN := libacryl_hdr_plugin
+
+# HWCServices
+BOARD_USES_HWC_SERVICES := true
+
+# Recovery
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 TARGET_RECOVERY_WIPE := $(DEVICE_PATH)/recovery.wipe
@@ -199,6 +220,9 @@ PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
 VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 
+# sepolicy
+SELINUX_IGNORE_NEVERALLOWS := true
+
 # Load Touch modules files
 TW_LOAD_VENDOR_MODULES := "heatmap.ko touch_offload.ko ftm5.ko sec_touch.ko goodix_brl_touch.ko goog_touch_interface.ko"
 
@@ -219,7 +243,6 @@ TW_INCLUDE_REPACKTOOLS := true
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_INCLUDE_RESETPROP := true
-TW_INCLUDE_LIBRESETPROP := true
 TW_EXCLUDE_APEX := true
 #TW_SUPPORT_INPUT_AIDL_HAPTICS := true
 TW_USE_CRYPTO := false
