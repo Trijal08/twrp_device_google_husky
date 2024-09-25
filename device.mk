@@ -32,10 +32,6 @@ $(call inherit-product-if-exists, vendor/google_devices/husky/proprietary/husky-
 #include device/google/shusky-sepolicy/husky-sepolicy.mk
 #include device/google/zuma-sepolicy/zuma-sepolicy.mk
 
-# Copy fstab file to ramdisk
-PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/recovery/root/fstab.zuma:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/system/etc/fstab.zuma
-
 PRODUCT_PACKAGES += \
     linker.vendor_ramdisk \
     resize2fs.vendor_ramdisk \
@@ -49,6 +45,8 @@ PRODUCT_COPY_FILES += \
 	device/google/husky/recovery/root/init.recovery.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.recovery.usb.rc \
 	device/google/husky/recovery/root/android.hardware.health-service.zuma_recovery.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/android.hardware.health-service.zuma_recovery.rc \
 	device/google/husky/recovery/root/android.hardware.boot-service.default_recovery-pixel.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/android.hardware.boot-service.default_recovery-pixel.rc \
+	device/google/husky/recovery/root/android.hardware.security.keymint-service.citadel.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/android.hardware.security.keymint-service.citadel.rc \
+	device/google/husky/recovery/root/android.hardware.security.keymint-service.rust.trusty.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/android.hardware.security.keymint-service.rust.trusty.rc \
 	device/google/husky/recovery/root/vendor/etc/ueventd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.rc
 
 # Device Manifest file
@@ -80,15 +78,15 @@ AB_OTA_POSTINSTALL_CONFIG += \
     POSTINSTALL_OPTIONAL_system=true
 
 # Boot control HAL
-#PRODUCT_PACKAGES += \
-#    android.hardware.boot-service.default-pixel \
-#    android.hardware.boot-service.default_recovery-pixel
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.2-impl \
-    android.hardware.boot@1.2-impl.recovery \
-    android.hardware.boot@1.2-impl-wrapper \
-    android.hardware.boot@1.2-impl-wrapper.recovery \
-    android.hardware.boot@1.2-service
+    android.hardware.boot-service.default-pixel \
+    android.hardware.boot-service.default_recovery-pixel
+#PRODUCT_PACKAGES += \
+#    android.hardware.boot@1.2-impl \
+#    android.hardware.boot@1.2-impl.recovery \
+#    android.hardware.boot@1.2-impl-wrapper \
+#    android.hardware.boot@1.2-impl-wrapper.recovery \
+#    android.hardware.boot@1.2-service
 
 PRODUCT_PACKAGES += \
     bootctrl.zuma \
@@ -268,10 +266,6 @@ PRODUCT_PACKAGES += \
     com.google.hardware.pixel.display-V5-ndk.vendor \
     com.google.hardware.pixel.display-V6-ndk.vendor
 
-# Shell scripts
-PRODUCT_COPY_FILES += \
-	device/google/zuma/disable_contaminant_detection.sh:$(TARGET_COPY_OUT_VENDOR)/bin/hw/disable_contaminant_detection.sh
-
 # PowerStats HAL
 PRODUCT_PACKAGES += \
 	android.hardware.power.stats-service.pixel
@@ -328,7 +322,6 @@ PRODUCT_COPY_FILES += \
     device/google/husky/prebuilt/android.hardware.weaver2-impl.nos.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/android.hardware.weaver2-impl.nos.so \
     device/google/husky/prebuilt/android.hardware.weaver-bridge.nos.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/android.hardware.weaver-bridge.nos.so \
     device/google/husky/prebuilt/android.hardware.oemlock-impl.nos.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/android.hardware.oemlock-impl.nos.so \
-    device/google/husky/prebuilt/android.hardware.gatekeeper@1.0.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/android.hardware.gatekeeper@1.0.so \
     device/google/husky/prebuilt/prepdecrypt.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/prepdecrypt.sh
 
 # Citadel
@@ -400,4 +393,7 @@ include hardware/google/pixel/common/pixel-common-device.mk
 
 # mm_event
 -include hardware/google/pixel/mm/device.mk
+
+# AIDL boot control
+#-include device/google/gs-common/bootctrl/bootctrl_aidl.mk
 #################################################################################
