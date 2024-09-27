@@ -1,0 +1,88 @@
+# Husky specific init.rc
+import /vendor/etc/init/hw/init.zuma.rc
+
+on init && property:ro.vendor.factory=1
+    import /vendor/etc/init/hw/init.factory.rc
+
+on init
+    # NFC streset tool name
+    setprop persist.vendor.nfc.streset libstreset23
+    setprop persist.vendor.se.streset libstreset23
+
+on early-boot
+    # Wait for insmod_sh to finish all common modules
+    wait_for_prop vendor.common.modules.ready 1
+    start insmod_sh_husky
+
+service insmod_sh_husky /vendor/bin/insmod.sh /vendor_dlkm/etc/init.insmod.${ro.hardware}.cfg
+    class main
+    user root
+    group root system
+    disabled
+    oneshot
+
+on property:vendor.mfgapi.touchpanel.permission=1
+    chmod 0600 /sys/devices/virtual/sec/tsp/cmd
+    chown system system /sys/devices/virtual/sec/tsp/cmd
+
+# Permissions for display
+on fs
+    chown system system /sys/class/backlight/panel0-backlight/acl_mode
+
+# WiFi
+on post-fs-data
+    setprop wifi.direct.interface p2p-dev-wlan0
+    setprop wifi.aware.interface aware_nmi0
+
+    # Speaker amp permission
+    chmod 644 /mnt/vendor/persist/audio/speaker.cal
+    chmod 644 /mnt/vendor/persist/audio/speaker.diag
+
+# Bluetooth
+on post-fs-data
+    chown bluetooth system /proc/bluetooth/timesync
+
+# Start the twoshay touch service
+on property:vendor.device.modules.ready=1
+    start twoshay
+
+# Toggle high_sensitivity according to touch_sensitivity_mode
+on property:persist.vendor.touch_sensitivity_mode=0 && property:sys.boot_completed=1
+    write /sys/devices/virtual/goog_touch_interface/gti.0/screen_protector_mode_enabled 0
+
+on property:persist.vendor.touch_sensitivity_mode=1 && property:sys.boot_completed=1
+    write /sys/devices/virtual/goog_touch_interface/gti.0/screen_protector_mode_enabled 1
+
+# Haptics
+on property:vendor.all.modules.ready=1
+    mkdir /mnt/vendor/persist/haptics 0770 system system
+    chmod 770 /mnt/vendor/persist/haptics
+    chmod 440 /mnt/vendor/persist/haptics/cs40l26.cal
+    chown system system /mnt/vendor/persist/haptics
+    chown system system /mnt/vendor/persist/haptics/cs40l26.cal
+
+    chown system system /sys/bus/i2c/devices/0-0043/calibration/f0_stored
+    chown system system /sys/bus/i2c/devices/0-0043/calibration/q_stored
+    chown system system /sys/bus/i2c/devices/0-0043/calibration/redc_stored
+    chown system system /sys/bus/i2c/devices/0-0043/default/vibe_state
+    chown system system /sys/bus/i2c/devices/0-0043/default/num_waves
+    chown system system /sys/bus/i2c/devices/0-0043/default/f0_offset
+    chown system system /sys/bus/i2c/devices/0-0043/default/owt_free_space
+    chown system system /sys/bus/i2c/devices/0-0043/default/f0_comp_enable
+    chown system system /sys/bus/i2c/devices/0-0043/default/redc_comp_enable
+    chown system system /sys/bus/i2c/devices/0-0043/default/delay_before_stop_playback_us
+    chown system system /sys/bus/i2c/devices/0-0043/dbc/dbc_env_rel_coef
+    chown system system /sys/bus/i2c/devices/0-0043/dbc/dbc_rise_headroom
+    chown system system /sys/bus/i2c/devices/0-0043/dbc/dbc_fall_headroom
+    chown system system /sys/bus/i2c/devices/0-0043/dbc/dbc_enable
+    chown system system /sys/bus/i2c/devices/0-0043/dbc/dbc_tx_lvl_thresh_fs
+    chown system system /sys/bus/i2c/devices/0-0043/dbc/dbc_tx_lvl_hold_off_ms
+    chown system system /sys/bus/i2c/devices/0-0043/default/pm_active_timeout_ms
+
+    enable vendor.vibrator.cs40l26
+
+# For Japan sku, always enforce camera shutter sound
+# Since this property is read by the audio server in system service,
+# it should be written by the system init.
+on property:ro.boot.hardware.sku=GE9DP
+    setprop audio.camerasound.force true
