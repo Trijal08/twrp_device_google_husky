@@ -1,6 +1,7 @@
 # Some about us
 export FOX_VERSION="R11.1"
 export OF_MAINTAINER="GamerBoy1234"
+export OF_MAINTAINER_AVATAR="device/google/husky/maintainer.png"
 
 # Build environment stuffs
 export FOX_BUILD_DEVICE="Pixel8Pro"
@@ -33,6 +34,7 @@ export OF_SCREEN_H=2400
 export OF_STATUS_H=120
 
 # Device stuff
+#export OF_KEEP_FORCED_ENCRYPTION=1
 export OF_NO_TREBLE_COMPATIBILITY_CHECK=1
 export OF_FBE_METADATA_MOUNT_IGNORE=1
 export OF_USE_LEGACY_BATTERY_SERVICES=1
