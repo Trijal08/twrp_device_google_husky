@@ -32,6 +32,10 @@ $(call inherit-product-if-exists, vendor/google_devices/husky/proprietary/husky-
 #include device/google/shusky-sepolicy/husky-sepolicy.mk
 #include device/google/zuma-sepolicy/zuma-sepolicy.mk
 
+# Copy fstab file to ramdisk
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/recovery/root/fstab.zuma:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/system/etc/fstab.zuma
+
 PRODUCT_PACKAGES += \
     linker.vendor_ramdisk \
     resize2fs.vendor_ramdisk \
