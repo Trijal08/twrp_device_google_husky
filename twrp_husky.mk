@@ -5,14 +5,15 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-# Inherit some common TWRP stuff.
-$(call inherit-product, vendor/twrp/config/common.mk)
-
 # Inherit device configuration
 $(call inherit-product, device/google/husky/device.mk)
 $(call inherit-product, device/google/zuma/lineage_common.mk)
 $(call inherit-product, device/google/zuma/device-common.mk)
 $(call inherit-product, device/google/gs-common/device.mk)
+
+# Inherit some common recovery stuff
+$(call inherit-product-if-exists, vendor/twrp/config/common.mk)
+$(call inherit-product-if-exists, vendor/pb/config/common.mk)
 
 PRODUCT_DEVICE := husky
 PRODUCT_NAME := twrp_husky
