@@ -25,6 +25,8 @@ export FOX_VIRTUAL_AB_DEVICE=1
 # Vendor Boot recovery
 export FOX_VENDOR_BOOT_RECOVERY=1
 export FOX_RECOVERY_VENDOR_BOOT_PARTITION="/dev/block/platform/13200000.ufs/by-name/vendor_boot"
+export BOARD_USES_RECOVERY_AS_BOOT=false
+export BOARD_USES_VENDOR_BOOT_AS_RECOVERY=true
 
 # Screen specifications
 export OF_STATUS_INDENT_LEFT=48
