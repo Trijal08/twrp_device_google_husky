@@ -39,16 +39,16 @@ PRODUCT_PACKAGES += \
     tune2fs.vendor_ramdisk
 
 # Init files
-#PRODUCT_COPY_FILES += \
-#	device/google/husky/init.husky.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.husky.rc \
-#	device/google/husky/recovery/root/init.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.rc \
-#	device/google/husky/recovery/root/init.recovery.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.recovery.usb.rc \
-#	device/google/husky/recovery/root/servicemanager.recovery.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/servicemanager.recovery.rc \
-#	device/google/husky/recovery/root/android.hardware.health-service.zuma_recovery.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.health-service.zuma_recovery.rc \
-#	device/google/husky/recovery/root/android.hardware.boot-service.default_recovery-pixel.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.boot-service.default_recovery-pixel.rc \
-#	device/google/husky/recovery/root/android.hardware.security.keymint-service.citadel.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.security.keymint-service.citadel.rc \
-#	device/google/husky/recovery/root/android.hardware.security.keymint-service.rust.trusty.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.security.keymint-service.rust.trusty.rc \
-#	device/google/husky/recovery/root/system/etc/ueventd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.rc
+PRODUCT_COPY_FILES += \
+	device/google/husky/init.husky.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.husky.rc \
+	device/google/husky/recovery/root/init.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.rc \
+	device/google/husky/recovery/root/init.recovery.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.recovery.usb.rc \
+	device/google/husky/recovery/root/servicemanager.recovery.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/servicemanager.recovery.rc \
+	device/google/husky/recovery/root/android.hardware.health-service.zuma_recovery.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.health-service.zuma_recovery.rc \
+	device/google/husky/recovery/root/android.hardware.boot-service.default_recovery-pixel.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.boot-service.default_recovery-pixel.rc \
+	device/google/husky/recovery/root/android.hardware.security.keymint-service.citadel.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.security.keymint-service.citadel.rc \
+	device/google/husky/recovery/root/android.hardware.security.keymint-service.rust.trusty.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.security.keymint-service.rust.trusty.rc \
+	device/google/husky/recovery/root/vendor/etc/ueventd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.rc
 
 # Device Manifest file
 DEVICE_MANIFEST_FILE := \
@@ -99,8 +99,9 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
 # fastbootd
 PRODUCT_PACKAGES += \
-	android.hardware.fastboot@1.1-impl.pixel \
-	fastbootd
+    android.hardware.fastboot@1.0-impl-mock \
+    android.hardware.fastboot@1.0-impl-mock.recovery \
+    fastbootd 
 
 # vndservicemanager and vndservice no longer included in API 30+, however needed by vendor code.
 PRODUCT_PACKAGES += vndservicemanager
