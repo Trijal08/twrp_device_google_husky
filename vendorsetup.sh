@@ -52,7 +52,7 @@ export FOX_BUILD_BASH=1
 export OF_RUN_POST_FORMAT_PROCESS=1
 
 # Disable decryption
-export OF_SKIP_FBE_DECRYPTION=1
+export OF_SKIP_FBE_DECRYPTION=0
 
 # Use /data/recovery/Fox/ for Storage
 export FOX_USE_DATA_RECOVERY_FOR_SETTINGS=1

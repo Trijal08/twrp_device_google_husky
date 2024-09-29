@@ -43,9 +43,12 @@ PRODUCT_COPY_FILES += \
 	device/google/husky/init.husky.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.husky.rc \
 	device/google/husky/recovery/root/init.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.rc \
 	device/google/husky/recovery/root/init.recovery.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.recovery.usb.rc \
+	device/google/husky/recovery/root/citadeld.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/citadeld.rc \
 	device/google/husky/recovery/root/servicemanager.recovery.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/servicemanager.recovery.rc \
 	device/google/husky/recovery/root/android.hardware.health-service.zuma_recovery.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.health-service.zuma_recovery.rc \
 	device/google/husky/recovery/root/android.hardware.boot-service.default_recovery-pixel.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.boot-service.default_recovery-pixel.rc \
+	device/google/husky/recovery/root/android.hardware.security.keymint-service.citadel.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.security.keymint-service.citadel.rc \
+	device/google/husky/recovery/root/android.hardware.security.keymint-service.rust.trusty.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.security.keymint-service.rust.trusty.rc \
 	device/google/husky/recovery/root/system/etc/ueventd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.rc
 
 # Device Manifest file
@@ -77,15 +80,15 @@ AB_OTA_POSTINSTALL_CONFIG += \
     POSTINSTALL_OPTIONAL_system=true
 
 # Boot control HAL
-#PRODUCT_PACKAGES += \
-#    android.hardware.boot-service.default-pixel \
-#    android.hardware.boot-service.default_recovery-pixel
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-impl \
     android.hardware.boot@1.2-impl.recovery \
     android.hardware.boot@1.2-impl-wrapper \
     android.hardware.boot@1.2-impl-wrapper.recovery \
     android.hardware.boot@1.2-service
+PRODUCT_PACKAGES += \
+    android.hardware.boot-service.default-pixel \
+    android.hardware.boot-service.default_recovery-pixel
 
 PRODUCT_PACKAGES += \
     bootctrl.zuma \
@@ -373,4 +376,7 @@ include hardware/google/pixel/common/pixel-common-device.mk
 
 # mm_event
 -include hardware/google/pixel/mm/device.mk
+
+# AIDL boot control
+#-include device/google/gs-common/bootctrl/bootctrl_aidl.mk
 #################################################################################
