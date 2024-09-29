@@ -17,6 +17,6 @@
 /vendor_kernel_boot             emmc		/dev/block/platform/13200000.ufs/by-name/vendor_kernel_boot   flags=slotselect;display="Vendor_Kernel_Boot";backup=1;flashimg=1
 
 # Removable storage
-/usb_otg			auto 		/dev/block/sde1                    /dev/block/sde             flags=fsflags=utf8;display="USB Mass Storage";storage;wipeingui;removable
+/usb_otg			vfat 		/dev/block/sde1                    /dev/block/sde             flags=fsflags=utf8;display="USB Mass Storage";storage;wipeingui;removable
 /sdcard1			auto 		/dev/block/mmcblk1p1               /dev/block/mmcblk1         flags=fsflags=utf8;display="MicroSD";storage;wipeingui;removable
 
