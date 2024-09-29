@@ -223,6 +223,16 @@ PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
 VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 
+# Fix Android 14 Decryption
+PLATFORM_SECURITY_PATCH := 2099-12-31
+VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
+PLATFORM_VERSION := 99.87.36
+PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
+
+# Vibrator
+TW_SUPPORT_INPUT_AIDL_HAPTICS := true
+TW_SKIP_ADDITIONAL_FSTAB := true
+
 # sepolicy
 SELINUX_IGNORE_NEVERALLOWS := true
 
@@ -253,7 +263,7 @@ TW_INCLUDE_LIBRESETPROP_SOURCE := true
 TW_EXCLUDE_APEX := true
 #TW_SUPPORT_INPUT_AIDL_HAPTICS := true
 TW_USE_CRYPTO := true
-TW_Y_OFFSET := 80
-TW_H_OFFSET := -80
+TW_Y_OFFSET := 40
+TW_H_OFFSET := -40
 TW_OVERRIDE_SYSTEM_PROPS := \ 
 "ro.bootimage.build.date.utc=ro.build.date.utc;ro.build.date.utc;ro.odm.build.date.utc=ro.build.date.utc;ro.product.build.date.utc=ro.build.date.utc;ro.system.build.date.utc=ro.build.date.utc;ro.system_ext.build.date.utc=ro.build.date.utc;ro.vendor.build.date.utc=ro.build.date.utc;ro.build.product;ro.build.fingerprint=ro.system.build.fingerprint;ro.build.version.incremental;ro.product.name=ro.product.system.name"
