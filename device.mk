@@ -77,9 +77,9 @@ AB_OTA_POSTINSTALL_CONFIG += \
     POSTINSTALL_OPTIONAL_system=true
 
 # Boot control HAL
-PRODUCT_PACKAGES += \
-    android.hardware.boot-service.default-pixel \
-    android.hardware.boot-service.default_recovery-pixel
+#PRODUCT_PACKAGES += \
+#    android.hardware.boot-service.default-pixel \
+#    android.hardware.boot-service.default_recovery-pixel
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-impl \
     android.hardware.boot@1.2-impl.recovery \
@@ -300,10 +300,28 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@1.0.so \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@2.0.so
 
-# Build libion and libresetprop
+# Build libion
 PRODUCT_PACKAGES += \
-    libion \
-    libresetprop
+    libion
+
+# Potential decryption...
+PRODUCT_COPY_FILES += \
+    device/google/husky/prebuilt/compatibility_matrix.1.xml:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/vintf/compatibility_matrix.1.xml \
+    device/google/husky/prebuilt/compatibility_matrix.5.xml:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/vintf/compatibility_matrix.5.xml \
+    device/google/husky/prebuilt/compatibility_matrix.3.xml:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/vintf/compatibility_matrix.3.xml \
+    device/google/husky/prebuilt/compatibility_matrix.xml:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/vintf/compatibility_matrix.xml \
+    device/google/husky/prebuilt/compatibility_matrix.4.xml:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/vintf/compatibility_matrix.4.xml \
+    device/google/husky/prebuilt/android.hardware.security.keymint-service.citadel:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/android.hardware.security.keymint-service.citadel \
+    device/google/husky/prebuilt/citadeld::$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/citadeld \
+    device/google/husky/prebuilt/android.hardware.weaver-service.citadel:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/android.hardware.weaver-service.citadel \
+    device/google/husky/prebuilt/libkeymint_support.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/libkeymint_support.so \
+    device/google/husky/prebuilt/android.hardware.authsecret-impl.nos.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/android.hardware.authsecret-impl.nos.so \
+    device/google/husky/prebuilt/android.hardware.security.keymint-impl.nos.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/android.hardware.security.keymint-impl.nos.so \
+    device/google/husky/prebuilt/android.hardware.weaver-impl.nos.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/android.hardware.weaver-impl.nos.so \
+    device/google/husky/prebuilt/android.hardware.weaver2-impl.nos.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/android.hardware.weaver2-impl.nos.so \
+    device/google/husky/prebuilt/android.hardware.weaver-bridge.nos.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/android.hardware.weaver-bridge.nos.so \
+    device/google/husky/prebuilt/android.hardware.oemlock-impl.nos.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/android.hardware.oemlock-impl.nos.so \
+    device/google/husky/prebuilt/prepdecrypt.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/prepdecrypt.sh
 
 # Citadel
 PRODUCT_PACKAGES += \

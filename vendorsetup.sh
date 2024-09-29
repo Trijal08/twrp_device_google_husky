@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ## OrangeFox variables:
 # Some about us
 export FOX_VERSION="R11.1"
@@ -25,8 +27,6 @@ export FOX_VIRTUAL_AB_DEVICE=1
 # Vendor Boot recovery
 export FOX_VENDOR_BOOT_RECOVERY=1
 export FOX_RECOVERY_VENDOR_BOOT_PARTITION="/dev/block/platform/13200000.ufs/by-name/vendor_boot"
-export BOARD_USES_RECOVERY_AS_BOOT=false
-export BOARD_USES_VENDOR_BOOT_AS_RECOVERY=true
 
 # Screen specifications
 export OF_STATUS_INDENT_LEFT=48
@@ -46,7 +46,7 @@ export OF_USE_LEGACY_BATTERY_SERVICES=1
 export FOX_REPLACE_TOOLBOX_GETPROP=1
 export FOX_BASH_TO_SYSTEM_BIN=1
 export FOX_USE_UPDATED_MAGISKBOOT=1
-export FOX_BUILD_BASH=0
+export FOX_BUILD_BASH=1
 
 # Run a process after formatting data to work-around MTP issues
 export OF_RUN_POST_FORMAT_PROCESS=1
