@@ -102,7 +102,8 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.0-impl-mock \
     android.hardware.fastboot@1.0-impl-mock.recovery \
-    fastbootd 
+    android.hardware.fastboot@1.1-impl.pixel \
+    fastbootd
 
 # vndservicemanager and vndservice no longer included in API 30+, however needed by vendor code.
 PRODUCT_PACKAGES += vndservicemanager
