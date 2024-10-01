@@ -3,7 +3,7 @@
 ## OrangeFox variables:
 # Some about us
 export FOX_VERSION="R11.1"
-export OF_MAINTAINER="GamerBoy1234"
+export OF_MAINTAINER="GamerBoy1234294"
 export OF_MAINTAINER_AVATAR="device/google/husky/maintainer.png"
 
 # Build environment stuffs
@@ -94,7 +94,7 @@ export OF_USE_GREEN_LED=1
 
 ## SkyHawk variables:
 # Maintainer flags
-export SHRP_MAINTAINER="GamerBoy1234"
+export SHRP_MAINTAINER="GamerBoy1234294"
 
 # Build environment stuff
 export SHRP_DEVICE_CODE=husky
