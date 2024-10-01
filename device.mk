@@ -103,6 +103,7 @@ PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.1-impl-mock \
     android.hardware.fastboot@1.1-impl-mock.recovery \
     android.hardware.fastboot@1.1-impl.pixel \
+    resetprop \
     fastbootd
 
 # vndservicemanager and vndservice no longer included in API 30+, however needed by vendor code.
