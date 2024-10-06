@@ -379,6 +379,14 @@ include hardware/google/pixel/common/pixel-common-device.mk
 # mm_event
 -include hardware/google/pixel/mm/device.mk
 
+# Crypto
+TW_USE_CRYPTO := true
+TW_INCLUDE_CRYPTO_FBE := true
+BOARD_USES_METADATA_PARTITION := true
+TW_USE_FSCRYPT_POLICY := 1
+TW_PREPARE_DATA_MEDIA_EARLY := true
+PRODUCT_ENFORCE_VINTF_MANIFEST := true
+
 # AIDL boot control
 #-include device/google/gs-common/bootctrl/bootctrl_aidl.mk
 #################################################################################
