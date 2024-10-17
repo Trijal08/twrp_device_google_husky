@@ -402,7 +402,3 @@ BOARD_USES_METADATA_PARTITION := true
 TW_USE_FSCRYPT_POLICY := 1
 TW_PREPARE_DATA_MEDIA_EARLY := true
 PRODUCT_ENFORCE_VINTF_MANIFEST := true
-
-# AIDL boot control
--include device/google/gs-common/bootctrl/bootctrl_aidl.mk
-#################################################################################
