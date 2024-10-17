@@ -87,10 +87,6 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-service
 
 PRODUCT_PACKAGES += \
-    android.hardware.boot-service.default-pixel \
-    android.hardware.boot-service.default_recovery-pixel
-
-PRODUCT_PACKAGES += \
     bootctrl.zuma \
     bootctrl.zuma.recovery \
     bootctl
