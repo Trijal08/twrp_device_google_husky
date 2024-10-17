@@ -12,7 +12,6 @@ include $(DEVICE_COMMON_PATH)/BoardConfig-common.mk
 include vendor/google/husky/BoardConfigVendor.mk
 
 TARGET_BOARD_INFO_FILE := $(DEVICE_PATH)/board-info.txt
-TARGET_BOOTLOADER_BOARD_NAME := husky
 
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
@@ -23,9 +22,8 @@ TARGET_IS_64_BIT := true
 BUILD_BROKEN_DUP_RULES := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
-
-# A/B
-AB_OTA_UPDATER := true
+PRODUCT_ENFORCE_VINTF_MANIFEST := true 
+DEVICE_MANIFEST_FILE := device/google/husky/recovery/root/vendor/etc/vintf/manifest.xml
 
 # Architecture
 TARGET_SOC := zuma
@@ -42,7 +40,7 @@ TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_VARIANT := cortex-a55
 TARGET_CPU_VARIANT_RUNTIME := cortex-a55
 
-# Enable 64-bit for non-zygote.
+# Enable 64-bit for non-zygote
 ZYGOTE_FORCE_64 := true
 
 # Force any prefer32 targets to be compiled as 64 bit.
@@ -80,7 +78,7 @@ BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD_RAW := $(strip $(shell cat $(DEVICE_PAT
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(foreach m,$(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD_RAW),$(notdir $(m)))
 BOOT_KERNEL_MODULES := $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD)
 BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(DEVICE_PATH)/recovery/root/vendor_dlkm.modules.blocklist
-TARGET_KERNEL_EXT_MODULE_ROOT := kernel/google/zuma/google-modules
+TARGET_KERNEL_EXT_MODULE_ROOT := $(TARGET_KERNEL_SOURCE)/google-modules
 
 TARGET_KERNEL_EXT_MODULES := \
     aoc/usb \
@@ -152,11 +150,11 @@ BOARD_USES_GENERIC_KERNEL_IMAGE := true
 BOARD_MOVE_GSI_AVB_KEYS_TO_VENDOR_BOOT := true
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_KERNEL_IMAGE_NAME := Image.lz4
-TARGET_KERNEL_CONFIG := gki_defconfig
+TARGET_KERNEL_CONFIG := neutrino_defconfig
 TARGET_KERNEL_SOURCE := kernel/google/zuma
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.lz4
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image
 BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)/prebuilt/dtbs
-BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbs/dtbo.img
+BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
 BOARD_MKBOOTIMG_ARGS += --base $(BOARD_KERNEL_BASE)
 BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_KERNEL_PAGESIZE)
 BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
@@ -195,6 +193,7 @@ BOARD_USES_HWC_SERVICES := true
 # Recovery
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
 TARGET_RECOVERY_WIPE := $(DEVICE_PATH)/recovery.wipe
 
 # Ramdisk compression
@@ -223,9 +222,6 @@ PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
 VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 
-# sepolicy
-SELINUX_IGNORE_NEVERALLOWS := true
-
 # Load Touch modules files
 TW_LOAD_VENDOR_MODULES := "heatmap.ko touch_offload.ko ftm5.ko sec_touch.ko goodix_brl_touch.ko goog_touch_interface.ko"
 
@@ -251,7 +247,6 @@ TW_INCLUDE_RESETPROP_SOURCE := true
 TW_INCLUDE_LIBRESETPROP := true
 TW_INCLUDE_LIBRESETPROP_SOURCE := true
 TW_EXCLUDE_APEX := true
-#TW_SUPPORT_INPUT_AIDL_HAPTICS := true
 TW_Y_OFFSET := 5
 TW_H_OFFSET := -5
 TW_OVERRIDE_SYSTEM_PROPS := \ 
