@@ -32,11 +32,6 @@ $(call inherit-product-if-exists, vendor/google/husky/proprietary/husky-vendor.m
 #include device/google/shusky-sepolicy/husky-sepolicy.mk
 #include device/google/zuma-sepolicy/zuma-sepolicy.mk
 
-# Copy fstab file to ramdisk
-PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/recovery/root/fstab.zuma:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/system/etc/fstab.zuma \
-    $(DEVICE_PATH)/recovery/root/fstab.zuma-fips:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/system/etc/fstab.zuma-fips
-
 PRODUCT_PACKAGES += \
     linker.vendor_ramdisk \
     resize2fs.vendor_ramdisk \
@@ -57,8 +52,7 @@ PRODUCT_COPY_FILES += \
 	$(DEVICE_PATH)/recovery/root/system/etc/ueventd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.rc
 
 # Device Manifest file
-DEVICE_MANIFEST_FILE := \
-	$(DEVICE_PATH)/manifest.xml
+DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
 
 # Shipping API
 PRODUCT_SHIPPING_API_LEVEL := 32
@@ -321,10 +315,6 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
 PRODUCT_PACKAGES += \
     libion
 
-# Copy Manifest file
-PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/recovery/root/vendor/etc/vintf/manifest.xml:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/vintf/manifest.xml
-
 # Citadel
 PRODUCT_PACKAGES += \
     citadeld \
@@ -395,10 +385,3 @@ include hardware/google/pixel/common/pixel-common-device.mk
 # mm_event
 -include hardware/google/pixel/mm/device.mk
 
-# Crypto
-TW_USE_CRYPTO := true
-TW_INCLUDE_CRYPTO_FBE := true
-BOARD_USES_METADATA_PARTITION := true
-TW_USE_FSCRYPT_POLICY := 1
-TW_PREPARE_DATA_MEDIA_EARLY := true
-PRODUCT_ENFORCE_VINTF_MANIFEST := true
