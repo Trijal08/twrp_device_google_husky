@@ -85,6 +85,9 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-impl-wrapper \
     android.hardware.boot@1.2-impl-wrapper.recovery \
     android.hardware.boot@1.2-service
+PRODUCT_PACKAGES += \
+    android.hardware.boot-service.default-pixel \
+    android.hardware.boot-service.default_recovery-pixel
 
 PRODUCT_PACKAGES += \
     bootctrl.zuma \
@@ -98,10 +101,6 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.0-impl-mock \
     android.hardware.fastboot@1.0-impl-mock.recovery \
-    android.hardware.fastboot@1.1-impl-mock \
-    android.hardware.fastboot@1.1-impl-mock.recovery \
-    android.hardware.fastboot@1.1-impl.pixel \
-    resetprop \
     fastbootd
 
 # vndservicemanager and vndservice no longer included in API 30+, however needed by vendor code.
