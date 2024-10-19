@@ -12,6 +12,7 @@ include $(DEVICE_COMMON_PATH)/BoardConfig-common.mk
 include vendor/google/husky/BoardConfigVendor.mk
 
 TARGET_BOARD_INFO_FILE := $(DEVICE_PATH)/board-info.txt
+TARGET_BOOTLOADER_BOARD_NAME := husky
 
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
@@ -79,7 +80,7 @@ BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD_RAW := $(strip $(shell cat $(DEVICE_PAT
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(foreach m,$(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD_RAW),$(notdir $(m)))
 BOOT_KERNEL_MODULES := $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD)
 BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(DEVICE_PATH)/recovery/root/vendor_dlkm.modules.blocklist
-TARGET_KERNEL_EXT_MODULE_ROOT := $(TARGET_KERNEL_SOURCE)/google-modules
+TARGET_KERNEL_EXT_MODULE_ROOT := kernel/google/zuma/google-modules
 
 TARGET_KERNEL_EXT_MODULES := \
     aoc/usb \
@@ -251,7 +252,7 @@ TW_INCLUDE_RESETPROP_SOURCE := true
 TW_INCLUDE_LIBRESETPROP := true
 TW_INCLUDE_LIBRESETPROP_SOURCE := true
 TW_EXCLUDE_APEX := true
-TW_Y_OFFSET := 5
-TW_H_OFFSET := -5
+#TW_SUPPORT_INPUT_AIDL_HAPTICS := true
+TW_USE_CRYPTO := true
 TW_OVERRIDE_SYSTEM_PROPS := \ 
 "ro.bootimage.build.date.utc=ro.build.date.utc;ro.build.date.utc;ro.odm.build.date.utc=ro.build.date.utc;ro.product.build.date.utc=ro.build.date.utc;ro.system.build.date.utc=ro.build.date.utc;ro.system_ext.build.date.utc=ro.build.date.utc;ro.vendor.build.date.utc=ro.build.date.utc;ro.build.product;ro.build.fingerprint=ro.system.build.fingerprint;ro.build.version.incremental;ro.product.name=ro.product.system.name"
