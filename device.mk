@@ -23,11 +23,11 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_ven
 # Enable project quotas and casefolding for emulated storage without sdcardfs
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 
-$(call inherit-product-if-exists, vendor/google/husky/prebuilts/device-vendor-husky.mk)
-$(call inherit-product-if-exists, vendor/google/zuma/prebuilts/device-vendor.mk)
-$(call inherit-product-if-exists, vendor/google/zuma/proprietary/device-vendor.mk)
-$(call inherit-product-if-exists, vendor/google/husky/proprietary/husky/device-vendor-husky.mk)
-$(call inherit-product-if-exists, vendor/google/husky/proprietary/husky-vendor.mk)
+$(call inherit-product-if-exists, vendor/google_devices/husky/prebuilts/device-vendor-husky.mk)
+$(call inherit-product-if-exists, vendor/google_devices/zuma/prebuilts/device-vendor.mk)
+$(call inherit-product-if-exists, vendor/google_devices/zuma/proprietary/device-vendor.mk)
+$(call inherit-product-if-exists, vendor/google_devices/husky/proprietary/husky/device-vendor-husky.mk)
+$(call inherit-product-if-exists, vendor/google_devices/husky/proprietary/husky-vendor.mk)
 
 #include device/google/shusky-sepolicy/husky-sepolicy.mk
 #include device/google/zuma-sepolicy/zuma-sepolicy.mk
@@ -40,25 +40,26 @@ PRODUCT_PACKAGES += \
 
 # Init files
 PRODUCT_COPY_FILES += \
-	$(DEVICE_PATH)/init.husky.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.husky.rc \
-	$(DEVICE_PATH)/recovery/root/init.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.rc \
-	$(DEVICE_PATH)/recovery/root/init.recovery.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.recovery.usb.rc \
-	$(DEVICE_PATH)/recovery/root/citadeld.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/citadeld.rc \
-	$(DEVICE_PATH)/recovery/root/servicemanager.recovery.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/servicemanager.recovery.rc \
-	$(DEVICE_PATH)/recovery/root/android.hardware.health-service.zuma_recovery.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.health-service.zuma_recovery.rc \
-	$(DEVICE_PATH)/recovery/root/android.hardware.boot-service.default_recovery-pixel.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.boot-service.default_recovery-pixel.rc \
-	$(DEVICE_PATH)/recovery/root/android.hardware.security.keymint-service.citadel.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.security.keymint-service.citadel.rc \
-	$(DEVICE_PATH)/recovery/root/android.hardware.security.keymint-service.rust.trusty.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.security.keymint-service.rust.trusty.rc \
-	$(DEVICE_PATH)/recovery/root/system/etc/ueventd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.rc
+	device/google/husky/init.husky.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.husky.rc \
+	device/google/husky/recovery/root/init.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.rc \
+	device/google/husky/recovery/root/init.recovery.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.recovery.usb.rc \
+	device/google/husky/recovery/root/citadeld.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/citadeld.rc \
+	device/google/husky/recovery/root/servicemanager.recovery.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/servicemanager.recovery.rc \
+	device/google/husky/recovery/root/android.hardware.health-service.zuma_recovery.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.health-service.zuma_recovery.rc \
+	device/google/husky/recovery/root/android.hardware.boot-service.default_recovery-pixel.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.boot-service.default_recovery-pixel.rc \
+	device/google/husky/recovery/root/android.hardware.security.keymint-service.citadel.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.security.keymint-service.citadel.rc \
+	device/google/husky/recovery/root/android.hardware.security.keymint-service.rust.trusty.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.security.keymint-service.rust.trusty.rc \
+	device/google/husky/recovery/root/system/etc/ueventd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.rc
 
 # Device Manifest file
-DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
+DEVICE_MANIFEST_FILE := \
+device/google/husky/manifest.xml
 
-# Shipping API
+#SHIPPING API
 PRODUCT_SHIPPING_API_LEVEL := 32
 PRODUCT_TARGET_VNDK_VERSION := 32
 
-# Define product platform
+# define hardware platform
 PRODUCT_PLATFORM := zuma
 
 # A/B OTA
@@ -101,7 +102,7 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.0-impl-mock \
     android.hardware.fastboot@1.0-impl-mock.recovery \
-    fastbootd
+    fastbootd 
 
 # vndservicemanager and vndservice no longer included in API 30+, however needed by vendor code.
 PRODUCT_PACKAGES += vndservicemanager
@@ -117,10 +118,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.ignore_hdr_camera_layers=true
 
 PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/display_colordata_dev_cal0.pb:$(TARGET_COPY_OUT_VENDOR)/etc/display_colordata_dev_cal0.pb \
-    $(DEVICE_PATH)/display_golden_google-hk3_cal0.pb:$(TARGET_COPY_OUT_VENDOR)/etc/display_golden_google-hk3_cal0.pb \
-    $(DEVICE_PATH)/display_golden_external_display_cal2.pb:$(TARGET_COPY_OUT_VENDOR)/etc/display_golden_external_display_cal2.pb \
-    $(DEVICE_PATH)/panel_config_google-hk3_cal0.pb:$(TARGET_COPY_OUT_VENDOR)/etc/panel_config_google-hk3_cal0.pb
+    device/google/husky/display_colordata_dev_cal0.pb:$(TARGET_COPY_OUT_VENDOR)/etc/display_colordata_dev_cal0.pb \
+    device/google/husky/display_golden_google-hk3_cal0.pb:$(TARGET_COPY_OUT_VENDOR)/etc/display_golden_google-hk3_cal0.pb \
+    device/google/husky/display_golden_external_display_cal2.pb:$(TARGET_COPY_OUT_VENDOR)/etc/display_golden_external_display_cal2.pb
 
 # config of display brightness dimming
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += vendor.display.0.brightness.dimming.usage?=1
@@ -146,6 +146,10 @@ PRODUCT_VENDOR_PROPERTIES += \
 
 # Display ACL
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += vendor.display.0.brightness.acl.default=0
+
+# display color data
+PRODUCT_COPY_FILES += \
+	device/google/shusky/husky/panel_config_google-hk3_cal0.pb:$(TARGET_COPY_OUT_VENDOR)/etc/panel_config_google-hk3_cal0.pb
 
 # Display RRS default Config
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += persist.vendor.display.primary.boot_config=1008x2244@120
@@ -193,12 +197,12 @@ PRODUCT_VENDOR_PROPERTIES += \
 
 # Power HAL config
 PRODUCT_COPY_FILES += \
-	$(DEVICE_PATH)/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
+	device/google/husky/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
 
 # PowerStats HAL
 PRODUCT_SOONG_NAMESPACES += \
-    $(DEVICE_PATH)/powerstats \
-    $(DEVICE_PATH)
+    device/google/husky/powerstats \
+    device/google/husky
 
 # Identity credential
 PRODUCT_PACKAGES += \
@@ -220,13 +224,6 @@ PRODUCT_PACKAGES += \
     nos_app_keymaster:64 \
     nos_app_weaver:64 \
     pixelpowerstats_provider_aidl_interface-cpp.vendor:64
-
-# SKU specific RROs
-PRODUCT_PACKAGES += \
-    SettingsOverlayG82U8 \
-    SettingsOverlayG0DZQ \
-    SettingsOverlayGHL1X \
-    SettingsOverlayGWKK3
 
 # Misc interfaces
 PRODUCT_PACKAGES += \
@@ -380,3 +377,6 @@ include hardware/google/pixel/common/pixel-common-device.mk
 # mm_event
 -include hardware/google/pixel/mm/device.mk
 
+# AIDL boot control
+#-include device/google/gs-common/bootctrl/bootctrl_aidl.mk
+#################################################################################
