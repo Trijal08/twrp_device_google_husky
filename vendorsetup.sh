@@ -58,12 +58,15 @@ export OF_SKIP_FBE_DECRYPTION=1
 # Use /data/recovery/Fox/ for Storage
 export FOX_USE_DATA_RECOVERY_FOR_SETTINGS=1
 
+# For some reason this is dumb and necessary
+export FOX_BUGGED_AOSP_ARB_WORKAROUND="1601559499"
+
 export OF_QUICK_BACKUP_LIST="/boot;/init_boot;/data;"
 
 # Magisk
 export FOX_USE_SPECIFIC_MAGISK_ZIP=~/Magisk/Magisk-v28.0.zip
 
-# Dont install AromaFM
+# Don't install AromaFM
 export FOX_DELETE_AROMAFM=1
 
 # Add some extras
@@ -73,8 +76,8 @@ export FOX_USE_SED_BINARY=1
 export FOX_USE_XZ_UTILS=1
 export FOX_USE_LZ4_BINARY=1
 export FOX_USE_ZSTD_BINARY=1
+export FOX_ASH_IS_BASH=1
 export FOX_REPLACE_BUSYBOX_PS=1
-export FOX_USE_BUSYBOX_BINARY=1
 export FOX_USE_BASH_SHELL=1
 export OF_USE_LZ4_COMPRESSION=1 
 export FOX_USE_NANO_EDITOR=0
@@ -82,6 +85,7 @@ export OF_DONT_KEEP_LOG_HISTORY=1
 export OF_SUPPORT_ALL_BLOCK_OTA_UPDATES=0
 export FOX_INSTALLER_DISABLE_AUTOREBOOT=1
 export OF_DISABLE_MIUI_SPECIFIC_FEATURES=1
+export OF_ENABLE_FS_COMPRESSION=1
 export FOX_REPLACE_TOOLBOX_GETPROP=1
 export FOX_BASH_TO_SYSTEM_BIN=1
 export FOX_ENABLE_APP_MANAGER=1
@@ -111,7 +115,7 @@ export SHRP_REC=/dev/block/platform/13200000.ufs/by-name/vendor_boot
 
 # Use this flag only if SHRP_REC is set
 # Default (if not set): N/A
-export SHRP_HAS_RECOVERY_PARTITION=false
+export SHRP_HAS_RECOVERY_PARTITION=true
 
 # Use this flag only if your device is A/B or Virtual A/B.
 # Default (if not set): N/A
@@ -142,3 +146,4 @@ export SHRP_NOTCH=false
 # SHRP Dark mode, use this flag to have dark theme set by default
 # Default (if not set) is not using DARK mode
 export SHRP_DARK=true
+
