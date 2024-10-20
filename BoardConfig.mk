@@ -195,6 +195,7 @@ BOARD_USES_HWC_SERVICES := true
 # Recovery
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
 TARGET_RECOVERY_WIPE := $(DEVICE_PATH)/recovery.wipe
 
 # Ramdisk compression
