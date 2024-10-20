@@ -252,8 +252,8 @@ TW_INCLUDE_LIBRESETPROP := true
 TW_INCLUDE_LIBRESETPROP_SOURCE := true
 TW_EXCLUDE_APEX := true
 #TW_SUPPORT_INPUT_AIDL_HAPTICS := true
-TW_USE_CRYPTO := true
-TW_Y_OFFSET := 80
-TW_H_OFFSET := -80
+TW_USE_CRYPTO := false
+TW_Y_OFFSET := 5
+TW_H_OFFSET := -5
 TW_OVERRIDE_SYSTEM_PROPS := \ 
 "ro.bootimage.build.date.utc=ro.build.date.utc;ro.build.date.utc;ro.odm.build.date.utc=ro.build.date.utc;ro.product.build.date.utc=ro.build.date.utc;ro.system.build.date.utc=ro.build.date.utc;ro.system_ext.build.date.utc=ro.build.date.utc;ro.vendor.build.date.utc=ro.build.date.utc;ro.build.product;ro.build.fingerprint=ro.system.build.fingerprint;ro.build.version.incremental;ro.product.name=ro.product.system.name"
